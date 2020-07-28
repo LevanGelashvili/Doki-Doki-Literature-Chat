@@ -1,7 +1,8 @@
-package ge.mudamtqveny.dokidokiliteraturechat.server
+package ge.mudamtqveny.dokidokiliteraturechat.server.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import ge.mudamtqveny.dokidokiliteraturechat.server.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
