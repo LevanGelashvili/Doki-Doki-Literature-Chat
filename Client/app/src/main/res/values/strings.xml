@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Doki Doki Literature Chat Client</string>
+    <string name="app_name">DDLC Client</string>
+
+    <string name="checking_connection">Checking Connection...</string>
 </resources>

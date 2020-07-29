@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph"
+    app:startDestination="@id/connectionView">
+
+    <fragment
+        android:id="@+id/connectionView"
+        android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.check_connection.ConnectionView"
+        android:label="ConnectionView"
+        tools:layout="@layout/connection_fragment"/>
+</navigation>
