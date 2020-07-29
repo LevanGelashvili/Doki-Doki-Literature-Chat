@@ -4,10 +4,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.server.network.HttpServer
 
 interface ServerPresenting {
 
-    /*
-        Returns current server state
-        True is server is up, false if server is down
-     */
+    /* Returns current server state: true is server is up, false if server is down*/
     fun changeServerState(): Boolean
 }
 
@@ -19,19 +16,11 @@ class ServerPresenter: ServerPresenting {
     override fun changeServerState(): Boolean {
 
         if (serverRunning)
-            stopServer()
+            server.stop()
         else
-            startServer()
+            server.start()
 
         serverRunning = !serverRunning
         return serverRunning
-    }
-
-    private fun startServer() {
-        TODO("Not yet implemented")
-    }
-
-    private fun stopServer() {
-        TODO("Not yet implemented")
     }
 }

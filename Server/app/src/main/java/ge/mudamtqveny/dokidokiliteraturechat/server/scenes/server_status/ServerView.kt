@@ -1,44 +1,43 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.scenes.server_status
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import ge.mudamtqveny.dokidokiliteraturechat.server.R
 
 interface ServerViewing {
     fun serverStateChanged()
 }
 
-class ServerView: Fragment(), ServerViewing {
+class ServerView : AppCompatActivity(), ServerViewing {
 
     lateinit var presenter: ServerPresenting
+
     private lateinit var button: Button
+    private lateinit var text: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.server_status_activity)
+
         ServerConfigurator(this).configure()
-    }
 
-    @SuppressLint("ResourceType")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.id.server_fragment, null)
+        text = findViewById(R.id.server_text)
 
-        button = view.findViewById(R.id.server_button)
+        button = findViewById(R.id.server_button)
         button.setOnClickListener {
             serverStateChanged()
         }
-
-        return view
     }
 
     override fun serverStateChanged() {
-        if (presenter.changeServerState())
-            button.setText(R.string.server_up)
-        else
-            button.setText(R.string.server_down)
+        if (presenter.changeServerState()) {
+            button.setText(R.string.stop_server)
+            text.setText(R.string.server_up)
+        } else {
+            button.setText(R.string.start_server)
+            text.setText(R.string.server_down)
+        }
     }
 }
