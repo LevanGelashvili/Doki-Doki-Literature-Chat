@@ -1,21 +1,16 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases
 
-import ge.mudamtqveny.dokidokiliteraturechat.client.network.ChatClient
-import java.lang.Exception
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ConnectionGateway
 
 interface ConnectingUseCase {
 
     /* Returns true if successful, else false */
-    suspend fun connect(): Boolean
+    fun connect(completionHandler: (Boolean) -> (Unit))
 }
 
-class ConnectionUseCase: ConnectingUseCase {
+class ConnectionUseCase(private val gateway: ConnectionGateway): ConnectingUseCase {
 
-    override suspend fun connect(): Boolean {
-        return try {
-            ChatClient().getClient.initiateConnection().isSuccessful
-        } catch (e: Exception) {
-            false
-        }
+    override fun connect(completionHandler: (Boolean) -> (Unit)) {
+        gateway.connect(completionHandler)
     }
 }

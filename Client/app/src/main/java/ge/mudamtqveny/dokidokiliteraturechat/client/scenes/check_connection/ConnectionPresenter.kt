@@ -9,22 +9,19 @@ import kotlinx.coroutines.launch
 
 interface ConnectionPresenting {
     fun initiateConnection()
-    fun connectionEstablished()
 }
 
 class ConnectionPresenter(private val router: ConnectionRouting, private val connectionUseCase: ConnectingUseCase): ConnectionPresenting {
 
     override fun initiateConnection() {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (connectionUseCase.connect()) {
-                router.navigateToIntroduce()
-            }
-            Log.d("Here", "wow over")
+        connectionUseCase.connect { isSuccessful ->
+            if (isSuccessful)
+                connectionEstablished()
+            // TODO: else display error message
         }
     }
 
-    override fun connectionEstablished() {
+    private fun connectionEstablished() {
         router.navigateToIntroduce()
     }
-
 }

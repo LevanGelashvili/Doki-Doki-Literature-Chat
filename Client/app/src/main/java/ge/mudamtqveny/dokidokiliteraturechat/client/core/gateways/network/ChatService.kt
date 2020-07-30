@@ -1,4 +1,4 @@
-package ge.mudamtqveny.dokidokiliteraturechat.client.network
+package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
 import retrofit2.Response
 import retrofit2.http.GET
