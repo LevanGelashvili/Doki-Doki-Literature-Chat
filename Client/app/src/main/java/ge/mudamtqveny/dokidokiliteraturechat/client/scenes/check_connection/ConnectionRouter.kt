@@ -7,7 +7,6 @@ interface ConnectionRouting {
 class ConnectionRouter(private val view: ConnectionView): ConnectionRouting {
 
     override fun navigateToIntroduce() {
-        //TODO: Navigate
     }
 
 }

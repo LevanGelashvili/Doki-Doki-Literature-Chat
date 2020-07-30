@@ -35,7 +35,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     def nav_version = "2.3.0-beta01"
-
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:4.3.1'
 }

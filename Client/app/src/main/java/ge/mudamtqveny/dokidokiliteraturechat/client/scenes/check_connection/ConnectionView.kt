@@ -17,6 +17,7 @@ class ConnectionView: Fragment(), ConnectionViewing {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ConnectionConfigurator(this).configure()
+        presenter.initiateConnection()
     }
 
     @SuppressLint("ResourceType")
