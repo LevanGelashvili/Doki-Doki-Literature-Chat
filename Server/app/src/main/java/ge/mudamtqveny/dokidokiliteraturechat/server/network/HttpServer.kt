@@ -29,7 +29,7 @@ class HttpServer {
     private val connectHandler = HttpHandler { exchange ->
         run {
             when (exchange.requestMethod) {
-                "GET" -> sendResponse(exchange,"Welcome")
+                "GET" -> sendResponse(exchange,"")
             }
         }
     }

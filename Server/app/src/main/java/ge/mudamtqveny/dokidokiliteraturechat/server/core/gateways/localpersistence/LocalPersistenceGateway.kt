@@ -85,6 +85,5 @@ data class MessageDataEntity (
 
 @Database(entities = [UserDataEntity::class, ChatDataEntity::class, MessageDataEntity::class], version = 1)
 abstract class ChatDatabase: RoomDatabase() {
-    //abstract fun getNoteDao(): NoteDAO
-    //abstract fun getTaskDao(): TaskDAO
+
 }

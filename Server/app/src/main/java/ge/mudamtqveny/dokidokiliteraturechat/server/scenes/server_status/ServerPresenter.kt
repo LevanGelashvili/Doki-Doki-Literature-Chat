@@ -11,7 +11,7 @@ interface ServerPresenting {
 class ServerPresenter: ServerPresenting {
 
     private var serverRunning: Boolean = false
-    lateinit var server: HttpServer
+    private var server = HttpServer()
 
     override fun changeServerState(): Boolean {
 
