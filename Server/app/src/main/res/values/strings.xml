@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">DDLC Server</string>
-    <string name="server_up">Server Up</string>
-    <string name="server_down">Server Down</string>
-    <string name="start_server">Start Server</string>
-    <string name="stop_server">Stop Server</string>
 </resources>

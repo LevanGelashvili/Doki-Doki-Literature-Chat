@@ -1,26 +1,40 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.scenes.server_status
 
-import ge.mudamtqveny.dokidokiliteraturechat.server.network.HttpServer
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.usecases.ServerTogglingUseCase
 
 interface ServerPresenting {
-
-    /* Returns current server state: true is server is up, false if server is down*/
-    fun changeServerState(): Boolean
+    fun handleViewDidLoad()
+    fun handleServerTogglerButtonClicked()
 }
 
-class ServerPresenter: ServerPresenting {
+class ServerPresenter (
 
-    private var serverRunning: Boolean = false
-    private var server = HttpServer()
+    private val view: ServerViewing,
+    private val useCase: ServerTogglingUseCase
 
-    override fun changeServerState(): Boolean {
+): ServerPresenting {
 
-        if (serverRunning)
-            server.stop()
-        else
-            server.start()
+    override fun handleViewDidLoad() {
+        view.setDescription("Server Down")
+        view.setServerTogglerButtonText("Start Server")
+    }
 
-        serverRunning = !serverRunning
-        return serverRunning
+    override fun handleServerTogglerButtonClicked() {
+
+        val isServerRunning = useCase.toggleServer()
+
+        val description: String
+        val buttonText: String
+
+        if (isServerRunning) {
+            description = "Server Up"
+            buttonText = "Stop Server"
+        } else {
+            description = "Server Down"
+            buttonText = "Start Server"
+        }
+
+        view.setDescription(description)
+        view.setServerTogglerButtonText(buttonText)
     }
 }

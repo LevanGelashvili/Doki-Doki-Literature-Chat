@@ -12,12 +12,11 @@
 
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
 
-        android:text="@string/start_server"
-        android:textSize="@dimen/server_button_text_size"
-        android:textColor="@android:color/white"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/server_button_text_size"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,13 +26,12 @@
     <TextView
         android:id="@+id/server_text"
 
-        android:text="@string/server_down"
-        android:textColor="@color/design_default_color_primary"
-        android:textSize="20dp"
-        android:layout_marginBottom="30sp"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30sp"
+
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="20dp"
 
         app:layout_constraintBottom_toTopOf="@+id/server_button"
         app:layout_constraintEnd_toEndOf="@+id/server_button"

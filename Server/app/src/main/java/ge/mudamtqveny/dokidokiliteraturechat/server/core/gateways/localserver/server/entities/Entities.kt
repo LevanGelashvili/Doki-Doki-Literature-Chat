@@ -1,4 +1,4 @@
-package ge.mudamtqveny.dokidokiliteraturechat.server.core.entities
+package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities
 
 data class ChatEntity (
 

@@ -1,11 +1,12 @@
-package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localpersistence
-import androidx.room.*
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.Gateway
+package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-class LocalPersistenceGateway: Gateway {
+import androidx.room.*
+import ge.mudamtqveny.dokidokiliteraturechat.server.app.Application
+
+class LocalPersistence {
 
     companion object {
-        val database = Room.databaseBuilder(ge.mudamtqveny.dokidokiliteraturechat.server.app.Application.context!!, ChatDatabase::class.java, "database").build()
+        val database = Room.databaseBuilder(Application.context!!, ChatDatabase::class.java, "database").build()
     }
 
 }
