@@ -37,7 +37,6 @@ dependencies {
     implementation files('libs/http-2.2.1.jar')
     implementation files('libs/sun-common-server.jar')
 
-
     def room_version = "2.2.5"
 
     implementation "androidx.room:room-runtime:$room_version"

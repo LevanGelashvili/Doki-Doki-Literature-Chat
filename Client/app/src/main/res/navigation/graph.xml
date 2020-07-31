@@ -8,6 +8,16 @@
     <fragment
         android:id="@+id/connectionView"
         android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.check_connection.ConnectionView"
-        android:label="ConnectionView"
-        tools:layout="@layout/connection_fragment"/>
+        android:label="Connection"
+        tools:layout="@layout/connection_fragment">
+        <action
+            android:id="@+id/navigateToIntroduce"
+            app:destination="@id/introduceView" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/introduceView"
+        android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.IntroduceView"
+        android:label="Introduce"
+        tools:layout="@layout/introduce_fragment"/>
 </navigation>
