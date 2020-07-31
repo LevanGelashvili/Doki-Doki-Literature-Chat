@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">DDLC Client</string>
 
+    <!--Connection Scene-->
     <string name="checking_connection">Checking Connection...</string>
+
+    <!--Introduce Scene-->
     <string name="enter_your_nickname">Enter your nickname</string>
     <string name="what_i_do">What I do</string>
     <string name="start">Start</string>
+    <string name="input_error">Enter both fields and try again</string>
+
 </resources>

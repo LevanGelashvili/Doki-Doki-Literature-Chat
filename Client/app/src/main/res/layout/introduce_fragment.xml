@@ -23,48 +23,39 @@
 
         app:srcCompat="@drawable/choose_profile_pic" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <EditText
         android:id="@+id/nickname_textField"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/introduce_edittext_rect"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
 
-        app:layout_constraintStart_toStartOf="@id/choose_image"
-        app:layout_constraintEnd_toEndOf="@id/choose_image"
+        android:background="@drawable/introduce_edittext_rect"
+        android:hint="@string/enter_your_nickname"
+        android:textAlignment="center"
+        android:textSize="20sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_image">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:textSize="18sp"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:hint="@string/enter_your_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    </EditText>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
+    <EditText
         android:id="@+id/what_i_do_textField"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+
         android:background="@drawable/introduce_edittext_rect"
+        android:hint="@string/what_i_do"
+        android:textAlignment="center"
+        android:textSize="20sp"
 
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@id/nickname_textField"
-        app:layout_constraintEnd_toEndOf="@id/nickname_textField"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickname_textField">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:textSize="18sp"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:hint="@string/what_i_do"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    </EditText>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/start_button"
@@ -79,6 +70,8 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        app:backgroundTint="@color/introduce_button_color"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

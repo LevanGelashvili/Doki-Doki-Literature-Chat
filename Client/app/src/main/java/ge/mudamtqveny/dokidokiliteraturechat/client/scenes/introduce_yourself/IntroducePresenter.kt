@@ -1,13 +1,15 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself
 
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
+
 interface IntroducePresenting {
-    fun verifyUser()
+    fun verifyUser(introduceUserViewModel: IntroduceUserViewModel)
 }
 
 class IntroducePresenter(private val router: IntroduceRouting): IntroducePresenting {
 
-    override fun verifyUser() {
-        TODO("Not yet implemented")
+    override fun verifyUser(userModel: IntroduceUserViewModel) {
+
     }
 
 }

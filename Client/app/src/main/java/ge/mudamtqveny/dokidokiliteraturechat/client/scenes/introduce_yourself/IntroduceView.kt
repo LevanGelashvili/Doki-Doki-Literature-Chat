@@ -3,16 +3,22 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
+import java.io.ByteArrayOutputStream
+
 
 interface IntroduceViewing {
     fun attemptLogin()
@@ -23,8 +29,8 @@ class IntroduceView : Fragment(), IntroduceViewing {
 
     lateinit var presenter: IntroducePresenting
 
-    private lateinit var nicknameText: TextView
-    private lateinit var jobTextView: TextView
+    private lateinit var nicknameTextField: EditText
+    private lateinit var jobTextField: EditText
     private lateinit var startButton: Button
     private lateinit var image: ImageView
 
@@ -37,8 +43,8 @@ class IntroduceView : Fragment(), IntroduceViewing {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.introduce_fragment, container, false)
 
-        //nicknameText = view.findViewById(R.id.nickname_textField)
-        //jobTextView = view.findViewById(R.id.what_i_do_textField)
+        nicknameTextField = view.findViewById(R.id.nickname_textField)
+        jobTextField = view.findViewById(R.id.what_i_do_textField)
 
         startButton = view.findViewById(R.id.start_button)
         startButton.setOnClickListener { attemptLogin() }
@@ -50,7 +56,25 @@ class IntroduceView : Fragment(), IntroduceViewing {
     }
 
     override fun attemptLogin() {
+        val nickname = nicknameTextField.text.toString()
+        val job = jobTextField.text.toString()
 
+        if (nickname.isEmpty() || job.isEmpty()) {
+            Toast.makeText(this.context, R.string.input_error.toString(), Toast.LENGTH_LONG).show()
+        } else {
+            presenter.verifyUser(IntroduceUserViewModel(nickname, job, encodePicture()))
+        }
+    }
+
+    /**
+     * Encodes picture to a base64 string
+     */
+    private fun encodePicture(): String {
+        val outputStream = ByteArrayOutputStream()
+        image.drawToBitmap().apply {
+            compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        }
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
     }
 
     override fun chooseImage() {
@@ -74,7 +98,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
                     chooseImage()
                 }
                 else {
-                    Toast.makeText(this.activity, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
