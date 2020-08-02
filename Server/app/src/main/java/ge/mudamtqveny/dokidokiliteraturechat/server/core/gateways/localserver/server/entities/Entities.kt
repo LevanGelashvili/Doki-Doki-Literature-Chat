@@ -8,13 +8,26 @@ data class ChatEntity (
 )
 
 data class UserEntity (
+    var id: Long?,
+    val nickname: String,
+    val job: String,
+    val picture: String
+    //TODO: CHATS
+) {
 
-    var id: Long?
-    // TODO
-)
+}
 
 data class MessageEntity (
 
     var id: Long?
     // TODO
 )
+
+/** Entities sent from client*/
+
+data class IntroduceUserViewModel (
+    val nickname: String,
+    val job: String,
+    val picture: String
+)
+

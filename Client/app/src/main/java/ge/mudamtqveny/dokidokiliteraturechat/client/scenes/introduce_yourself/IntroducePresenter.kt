@@ -1,6 +1,5 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself
 
-import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.IntroducingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel

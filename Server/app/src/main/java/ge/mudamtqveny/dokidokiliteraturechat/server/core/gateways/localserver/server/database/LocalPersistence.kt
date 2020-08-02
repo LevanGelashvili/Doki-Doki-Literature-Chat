@@ -2,11 +2,22 @@ package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.s
 
 import androidx.room.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.app.Application
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.IntroduceUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserEntity
 
-class LocalPersistence {
+class LocalPersistence: DatabaseService {
 
     companion object {
-        val database = Room.databaseBuilder(Application.context!!, ChatDatabase::class.java, "database").build()
+        private val database = Room.databaseBuilder(Application.context!!, ChatDatabase::class.java, "database").build()
+        private val instance = LocalPersistence()
+
+        fun getInstance(): DatabaseService {
+            return instance
+        }
+    }
+
+    override fun verifyUser(userViewModel: IntroduceUserViewModel): UserEntity {
+        return UserEntity(0, "a", "b", "c")
     }
 
 }
@@ -86,5 +97,5 @@ data class MessageDataEntity (
 
 @Database(entities = [UserDataEntity::class, ChatDataEntity::class, MessageDataEntity::class], version = 1)
 abstract class ChatDatabase: RoomDatabase() {
-
+    abstract fun getUserDAO(): UserDAO
 }
