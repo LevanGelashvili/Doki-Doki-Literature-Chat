@@ -18,3 +18,7 @@ fun <T : Any> exchangeToObject(exchange: HttpExchange, classType: Class<T>): T {
     val jsonString = BufferedReader(isr).use(BufferedReader::readText)
     return Gson().fromJson(jsonString, classType)
 }
+
+fun objectToJSON(obj: Any): String {
+    return Gson().toJson(obj)
+}

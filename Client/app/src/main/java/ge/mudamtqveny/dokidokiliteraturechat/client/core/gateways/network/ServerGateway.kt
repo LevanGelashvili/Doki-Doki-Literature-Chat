@@ -2,6 +2,7 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
 import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ConnectionGateway
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.LoginUserGateway
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
@@ -37,17 +38,17 @@ class ServerGateway: ConnectionGateway, LoginUserGateway { // TODO: Singleton
 
     /** LoginUserGateway Part */
 
-    override fun verify(user: IntroduceUserViewModel, completionHandler: (UserEntity?) -> (Unit)) {
+    override fun verify(user: UserLoginEntity, completionHandler: (UserEntity?) -> (Unit)) {
         CoroutineScope(Dispatchers.IO).launch {
             completionHandler(getUserFromCall(user))
         }
     }
 
-    private suspend fun getUserFromCall(userModel: IntroduceUserViewModel): UserEntity? {
+    private suspend fun getUserFromCall(user: UserLoginEntity): UserEntity? {
         var user: UserEntity? = null
 
         try {
-            getClient.verifyUser(userModel).enqueue( object: Callback<UserEntity?> {
+            getClient.verifyUser(user).enqueue( object: Callback<UserEntity?> {
 
                 override fun onFailure(call: Call<UserEntity?>, t: Throwable) {}
 

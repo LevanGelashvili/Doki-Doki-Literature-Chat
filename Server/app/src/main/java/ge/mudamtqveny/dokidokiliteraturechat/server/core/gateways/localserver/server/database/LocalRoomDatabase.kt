@@ -2,29 +2,45 @@ package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.s
 
 import androidx.room.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.app.Application
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.IntroduceUserViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserEntity
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class LocalPersistence: DatabaseService {
+class LocalRoomDatabase: DatabaseService {
 
     companion object {
         private val database = Room.databaseBuilder(Application.context!!, ChatDatabase::class.java, "database").build()
-        private val instance = LocalPersistence()
+        private val instance = LocalRoomDatabase()
 
         fun getInstance(): DatabaseService {
             return instance
         }
     }
 
-    override fun verifyUser(userViewModel: IntroduceUserViewModel): UserEntity {
-        return UserEntity(0, "a", "b", "c")
+    override fun verifyUser(loginEntity: UserLoginEntity): UserEntity {
+
+        var resultUser: UserEntity? = null
+
+        /*GlobalScope.launch(Dispatchers.IO) {
+            val userData = database.getUserDAO().userGivenNickname(loginEntity.nickname)
+            if (userData == null) {
+                val id = database.getUserDAO().insertUser(UserDataEntity(loginEntity))
+            } else {
+
+                resultUser = UserEntity(userData)
+            }
+        }*/
+
+        return resultUser!!
     }
 
 }
 
 /* Framework specific part */
 
-@Entity(tableName = "users")
+@Entity(tableName = USER_TABLE)
 data class UserDataEntity (
 
     @PrimaryKey(autoGenerate = true)
@@ -39,14 +55,22 @@ data class UserDataEntity (
 
     @ColumnInfo(name = "picture")
     var picture: String
-)  // TODO: CONSTRUCTOR
+)  {
+
+    constructor(passedId: Long, userLoginEntity: UserLoginEntity): this (
+        id = passedId,
+        name = userLoginEntity.nickname,
+        job = userLoginEntity.job,
+        picture = userLoginEntity.picture
+    )
+}
 
 
 
 
 
 @Entity(
-    tableName = "chats",
+    tableName = CHAT_TABLE,
     foreignKeys = [
         ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id"])
     ]
@@ -64,7 +88,7 @@ data class ChatDataEntity (
 
 
 @Entity(
-    tableName = "messages",
+    tableName = MESSAGE_TABLE,
     foreignKeys = [
         ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_from"]),
         ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_to"]),
