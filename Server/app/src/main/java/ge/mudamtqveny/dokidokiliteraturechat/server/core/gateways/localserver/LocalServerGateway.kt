@@ -14,13 +14,11 @@ class LocalServerGateway: RunnableGateway {
         get() = runs
 
     override fun run() {
-        // assert(!runs)
         runs = true
         server.start()
     }
 
     override fun halt() {
-        // assert(runs)
         runs = false
         server.stop(0)
     }

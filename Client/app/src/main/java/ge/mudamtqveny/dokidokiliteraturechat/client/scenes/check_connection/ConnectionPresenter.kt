@@ -9,6 +9,7 @@ interface ConnectionPresenting {
 class ConnectionPresenter(private val router: ConnectionRouting, private val connectionUseCase: ConnectingUseCase): ConnectionPresenting {
 
     override fun initiateConnection() {
+
         connectionUseCase.connect { isSuccessful ->
             if (isSuccessful)
                 connectionEstablished()

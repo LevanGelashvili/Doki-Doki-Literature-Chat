@@ -4,7 +4,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ConnectionGate
 
 interface ConnectingUseCase {
 
-    /* Returns true if successful, else false */
+    /** Returns true if successful, else false */
     fun connect(completionHandler: (Boolean) -> (Unit))
 }
 

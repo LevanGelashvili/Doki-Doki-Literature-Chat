@@ -60,7 +60,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
         val job = jobTextField.text.toString()
 
         if (nickname.isEmpty() || job.isEmpty()) {
-            Toast.makeText(this.context, R.string.input_error.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this.context, "Please, fill in all parameters", Toast.LENGTH_LONG).show()
         } else {
             presenter.verifyUser(IntroduceUserViewModel(nickname, job, encodePicture()))
         }
@@ -70,6 +70,9 @@ class IntroduceView : Fragment(), IntroduceViewing {
      * Encodes picture to a base64 string
      */
     private fun encodePicture(): String {
+
+        return "ENCODED PICTURE"
+
         val outputStream = ByteArrayOutputStream()
         image.drawToBitmap().apply {
             compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
