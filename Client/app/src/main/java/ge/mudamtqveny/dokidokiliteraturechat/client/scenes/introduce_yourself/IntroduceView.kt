@@ -60,7 +60,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
         val job = jobTextField.text.toString()
 
         if (nickname.isEmpty() || job.isEmpty()) {
-            Toast.makeText(this.context, "Please, fill in all parameters", Toast.LENGTH_LONG).show()
+            Toast.makeText(this.context, "Fill both parameters and try again", Toast.LENGTH_LONG).show()
         } else {
             presenter.verifyUser(IntroduceUserViewModel(nickname, job, encodePicture()))
         }
@@ -70,9 +70,6 @@ class IntroduceView : Fragment(), IntroduceViewing {
      * Encodes picture to a base64 string
      */
     private fun encodePicture(): String {
-
-        return "ENCODED PICTURE"
-
         val outputStream = ByteArrayOutputStream()
         image.drawToBitmap().apply {
             compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
@@ -101,7 +98,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
                     chooseImage()
                 }
                 else {
-                    Toast.makeText(this.context, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Permission denied", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -111,7 +108,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            image.setImageURI(data?.data)
+            Toast.makeText(this.context, "Image chosen successfully!", Toast.LENGTH_LONG).show()
         }
     }
 }
