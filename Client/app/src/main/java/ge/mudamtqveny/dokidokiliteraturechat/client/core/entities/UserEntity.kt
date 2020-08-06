@@ -5,7 +5,7 @@ class UserEntity {
 }
 
 data class UserLoginEntity (
-    val nickname: String,
+    val name: String,
     val job: String,
     val picture: String
 )

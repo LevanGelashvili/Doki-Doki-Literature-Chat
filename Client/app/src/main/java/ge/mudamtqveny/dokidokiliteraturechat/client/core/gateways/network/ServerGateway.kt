@@ -44,11 +44,11 @@ class ServerGateway: ConnectionGateway, LoginUserGateway { // TODO: Singleton
         }
     }
 
-    private suspend fun getUserFromCall(user: UserLoginEntity): UserEntity? {
+    private suspend fun getUserFromCall(userLogin: UserLoginEntity): UserEntity? {
         var user: UserEntity? = null
 
         try {
-            getClient.verifyUser(user).enqueue( object: Callback<UserEntity?> {
+            getClient.verifyUser(userLogin).enqueue( object: Callback<UserEntity?> {
 
                 override fun onFailure(call: Call<UserEntity?>, t: Throwable) {}
 

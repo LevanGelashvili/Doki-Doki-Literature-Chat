@@ -1,25 +1,24 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities
 
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.UserDataEntity
-
 data class UserEntity (
     var id: Long?,
-    val nickname: String,
+    val name: String,
     val job: String,
-    val picture: String
-    //TODO: CHATS
+    val picture: String,
+    val chats: List<ChatEntity>
 ) {
-    constructor(userData: UserDataEntity) : this(
-        id = userData.id,
-        nickname = userData.name,
-        job = userData.job,
-        picture = userData.picture
-    )
 
+    constructor(id: Long, loginEntity: UserLoginEntity, chats: List<ChatEntity>) : this(
+        id = id,
+        name = loginEntity.name,
+        job = loginEntity.job,
+        picture = loginEntity.picture,
+        chats = chats
+    )
 }
 
 data class UserLoginEntity (
-    val nickname: String,
+    val name: String,
     val job: String,
     val picture: String
 )

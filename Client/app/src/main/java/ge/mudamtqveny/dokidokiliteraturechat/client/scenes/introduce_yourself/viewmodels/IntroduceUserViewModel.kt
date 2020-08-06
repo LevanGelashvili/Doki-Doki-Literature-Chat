@@ -4,11 +4,11 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntit
 
 
 data class IntroduceUserViewModel (
-    val nickname: String,
+    val name: String,
     val job: String,
     val picture: String
 ) {
     fun toUserLoginEntity(): UserLoginEntity {
-        return UserLoginEntity(nickname, job, picture)
+        return UserLoginEntity(name, job, picture)
     }
 }
