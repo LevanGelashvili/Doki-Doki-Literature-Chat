@@ -7,7 +7,7 @@ class ConnectionConfigurator(private val view: ConnectionView) {
 
     fun configure() {
         val router = ConnectionRouter(view)
-        val gateway = ServerGateway()
+        val gateway = ServerGateway.getInstance()
         val connectionUseCase = ConnectionUseCase(gateway)
         val presenter = ConnectionPresenter(router, connectionUseCase)
 

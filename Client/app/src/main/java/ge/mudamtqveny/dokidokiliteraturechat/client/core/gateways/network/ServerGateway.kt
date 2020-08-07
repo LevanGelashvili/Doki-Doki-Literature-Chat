@@ -18,9 +18,17 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServerGateway: ConnectionGateway, LoginUserGateway { // TODO: Singleton
+class ServerGateway: ConnectionGateway, LoginUserGateway {
 
     private val endPoint = "http://localhost:8080/"
+
+    companion object {
+        private val instance = ServerGateway()
+
+        @Synchronized fun getInstance(): ServerGateway {
+            return instance
+        }
+    }
 
     /** ConnectionGateway part */
 
