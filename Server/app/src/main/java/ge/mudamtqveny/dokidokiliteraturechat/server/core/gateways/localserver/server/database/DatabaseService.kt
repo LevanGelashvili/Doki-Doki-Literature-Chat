@@ -1,6 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserEntity
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
 
 interface DatabaseService {
@@ -8,7 +8,7 @@ interface DatabaseService {
     /**
      * Takes a user login entity and verifies it
      * Registers user if not present in database, else, updates its field
-     * Returns user entity on completion
+     * Invokes completionHandler on succession
      * */
-    fun verifyUser(userViewModel: UserLoginEntity): UserEntity
+    fun verifyUser(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity) -> (Unit))
 }

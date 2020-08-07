@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Messages Scene-->
+    <dimen name="message_bubble_corner">35dp</dimen>
+    <dimen name="message_bubble_margin">30dp</dimen>
+    <dimen name="message_bubble_padding">20dp</dimen>
+    <dimen name="message_bubble_width">250dp</dimen>
+    <dimen name="message_circle_size">20dp</dimen>
+</resources>

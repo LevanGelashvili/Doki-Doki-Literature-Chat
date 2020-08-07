@@ -1,6 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself
 
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.IntroducingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
 
@@ -12,19 +12,19 @@ class IntroducePresenter(private val router: IntroduceRouting, private val intro
 
     override fun verifyUser(userModel: IntroduceUserViewModel) {
 
-        val user = userModel.toUserLoginEntity()
+        val loginEntity = userModel.toUserLoginEntity()
 
-        introducingUseCase.verify(user) { userEntity ->
-            if (userEntity == null) {
+        introducingUseCase.verify(loginEntity) { userIdEntity ->
+            if (userIdEntity == null) {
                 // TODO: Display error message
             } else {
-                userVerified(userEntity)
+                userVerified(userIdEntity)
             }
 
         }
     }
 
-    private fun userVerified(user: UserEntity) {
-        router.navigateToChatList(user)
+    private fun userVerified(userId: UserIdEntity) {
+        router.navigateToChatList(userId)
     }
 }

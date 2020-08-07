@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/message_received_color" />
+    <corners
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="@dimen/message_bubble_corner"
+        android:topLeftRadius="@dimen/message_bubble_corner"
+        android:topRightRadius="@dimen/message_bubble_corner" /></shape>

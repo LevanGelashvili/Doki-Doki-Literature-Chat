@@ -1,6 +1,5 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.handlers
 
-import android.util.Log
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.LocalRoomDatabase
@@ -16,8 +15,9 @@ class VerifyHandler: HttpHandler {
         when (exchange.requestMethod) {
             "POST" -> {
                 val userLoginEntity = exchangeToObject(exchange, UserLoginEntity::class.java)
-                val user = LocalRoomDatabase.getInstance().verifyUser(userLoginEntity)
-                sendResponse(exchange, objectToJSON(user))
+                LocalRoomDatabase.getInstance().verifyUser(userLoginEntity) { userIdEntity ->
+                    sendResponse(exchange, objectToJSON(userIdEntity))
+                }
             }
         }
     }

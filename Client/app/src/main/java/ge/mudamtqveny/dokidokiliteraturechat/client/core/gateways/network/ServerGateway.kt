@@ -1,11 +1,9 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
-import android.util.Log
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ConnectionGateway
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.LoginUserGateway
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,30 +44,26 @@ class ServerGateway: ConnectionGateway, LoginUserGateway {
 
     /** LoginUserGateway Part */
 
-    override fun verify(user: UserLoginEntity, completionHandler: (UserEntity?) -> (Unit)) {
+    override fun verify(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity?) -> (Unit)) {
         CoroutineScope(Dispatchers.IO).launch {
-            completionHandler(getUserFromCall(user))
+            getUserFromCall(loginEntity) { userIdEntity ->
+                completionHandler(userIdEntity)
+            }
         }
     }
 
-    private suspend fun getUserFromCall(userLogin: UserLoginEntity): UserEntity? {
-        var user: UserEntity? = null
+    private suspend fun getUserFromCall(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity?) -> Unit) {
+        getClient.verifyUser(loginEntity).enqueue( object: Callback<UserIdEntity?> {
 
-        try {
-            getClient.verifyUser(userLogin).enqueue( object: Callback<UserEntity?> {
+            override fun onFailure(call: Call<UserIdEntity?>, t: Throwable) {}
 
-                override fun onFailure(call: Call<UserEntity?>, t: Throwable) {}
-
-                override fun onResponse(call: Call<UserEntity?>, response: Response<UserEntity?>) {
-                    if (response.isSuccessful) {
-                        user = response.body()
-                    }
+            override fun onResponse(call: Call<UserIdEntity?>, response: Response<UserIdEntity?>) {
+                if (response.isSuccessful) {
+                    completionHandler(response.body())
                 }
+            }
 
-            })
-        } catch (e: Exception) { }
-
-        return user
+        })
     }
 
     private val getClient: ChatService get() {

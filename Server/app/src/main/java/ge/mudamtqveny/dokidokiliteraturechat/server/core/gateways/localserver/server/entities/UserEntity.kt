@@ -1,6 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities
 
-data class UserEntity (
+/*data class UserEntity (
     var id: Long?,
     val name: String,
     val job: String,
@@ -15,7 +15,11 @@ data class UserEntity (
         picture = loginEntity.picture,
         chats = chats
     )
-}
+}*/
+
+data class UserIdEntity (
+    val id: Long?
+)
 
 data class UserLoginEntity (
     val name: String,

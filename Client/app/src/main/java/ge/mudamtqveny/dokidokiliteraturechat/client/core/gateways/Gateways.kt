@@ -1,7 +1,7 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways
 
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
 
 interface ConnectionGateway {
@@ -9,5 +9,5 @@ interface ConnectionGateway {
 }
 
 interface LoginUserGateway {
-    fun verify(user: UserLoginEntity, completionHandler: (UserEntity?) -> (Unit))
+    fun verify(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity?) -> (Unit))
 }

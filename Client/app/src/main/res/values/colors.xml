@@ -6,4 +6,9 @@
 
     <color name="introduce_button_color">#5479F1</color>
     <color name="introduce_rect_color">#F3F6FF</color>
+
+    <color name="message_sent_color">#5479F1</color>
+    <color name="message_received_color">#F4F6FF</color>
+    <color name="message_rect_color">#F4F4F4</color>
+    <color name="message_circle_color">#494A63</color>
 </resources>
