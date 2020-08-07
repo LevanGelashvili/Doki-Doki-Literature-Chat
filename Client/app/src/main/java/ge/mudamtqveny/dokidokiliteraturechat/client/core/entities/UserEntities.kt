@@ -1,7 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.entities
 
 data class UserIdEntity (
-    val id: Long?
+    val id: Long
 )
 
 data class UserLoginEntity (

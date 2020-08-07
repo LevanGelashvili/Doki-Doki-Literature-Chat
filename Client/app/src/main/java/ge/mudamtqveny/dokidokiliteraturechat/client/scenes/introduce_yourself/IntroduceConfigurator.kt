@@ -7,7 +7,7 @@ class IntroduceConfigurator(private val view: IntroduceView) {
 
     fun configure() {
         val router = IntroduceRouter(view)
-        val gateway = ServerGateway.getInstance()
+        val gateway = ServerGateway()
         val introduceUseCase = IntroduceUseCase(gateway)
         val presenter = IntroducePresenter(router, introduceUseCase)
 

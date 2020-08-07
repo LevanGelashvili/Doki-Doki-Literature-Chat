@@ -8,7 +8,6 @@ import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.se
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.objectToJSON
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.sendResponse
 
-
 class VerifyHandler: HttpHandler {
 
     override fun handle(exchange: HttpExchange) {

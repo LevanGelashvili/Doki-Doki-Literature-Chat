@@ -1,5 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
+import android.util.Log
 import androidx.room.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
@@ -26,7 +27,7 @@ class LocalRoomDatabase: DatabaseService {
             val userData = database.getUserDAO().userGivenNickname(loginEntity.name)
 
             val resultUser: UserIdEntity = if (userData == null) {
-                val id = database.getUserDAO().insertUser(UserDataEntity(null, loginEntity))
+                val id = database.getUserDAO().insertUser(UserDataEntity(loginEntity))
                 UserIdEntity(id)
             } else {
                 database.getUserDAO().updateUser(UserDataEntity(userData.id, loginEntity))

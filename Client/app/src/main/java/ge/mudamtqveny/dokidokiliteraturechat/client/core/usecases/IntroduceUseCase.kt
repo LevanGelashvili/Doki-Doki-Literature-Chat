@@ -7,12 +7,12 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.LoginUserGatew
 interface IntroducingUseCase {
 
     /** Returns user entity if registered / successfully logged in server DB, else null*/
-    fun verify(user: UserLoginEntity, completionHandler: (UserIdEntity?) -> (Unit))
+    fun verify(user: UserLoginEntity, completionHandler: (UserIdEntity) -> (Unit))
 }
 
 class IntroduceUseCase(private val gateway: LoginUserGateway): IntroducingUseCase {
 
-    override fun verify(user: UserLoginEntity, completionHandler: (UserIdEntity?) -> (Unit)) {
+    override fun verify(user: UserLoginEntity, completionHandler: (UserIdEntity) -> (Unit)) {
         return gateway.verify(user, completionHandler)
     }
 }

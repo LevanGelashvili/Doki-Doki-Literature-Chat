@@ -12,9 +12,9 @@ import retrofit2.http.POST
 interface ChatService {
 
     @GET("connect")
-    suspend fun initiateConnection(): Response<Void>
+    fun initiateConnection(): Call<Void>
 
     @Headers("Content-Type: application/json")
     @POST("verify")
-    suspend fun verifyUser(@Body loginEntity: UserLoginEntity): Call<UserIdEntity>
+    fun verifyUser(@Body loginEntity: UserLoginEntity): Call<UserIdEntity>
 }

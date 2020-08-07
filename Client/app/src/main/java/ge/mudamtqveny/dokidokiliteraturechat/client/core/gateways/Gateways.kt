@@ -9,5 +9,5 @@ interface ConnectionGateway {
 }
 
 interface LoginUserGateway {
-    fun verify(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity?) -> (Unit))
+    fun verify(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity) -> (Unit))
 }

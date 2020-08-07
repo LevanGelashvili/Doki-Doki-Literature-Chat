@@ -18,7 +18,7 @@ package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.s
 }*/
 
 data class UserIdEntity (
-    val id: Long?
+    val id: Long
 )
 
 data class UserLoginEntity (

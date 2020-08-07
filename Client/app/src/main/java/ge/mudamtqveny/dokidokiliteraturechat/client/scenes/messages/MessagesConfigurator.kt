@@ -6,7 +6,7 @@ class MessagesConfigurator(private val view: MessagesView) {
 
     fun configure() {
         val router = MessagesRouter(view)
-        val gateway = ServerGateway.getInstance() //TODO: Usecases
+        val gateway = ServerGateway() // TODO: Usecases
         val presenter = MessagesPresenter(router)
         view.presenter = presenter
     }

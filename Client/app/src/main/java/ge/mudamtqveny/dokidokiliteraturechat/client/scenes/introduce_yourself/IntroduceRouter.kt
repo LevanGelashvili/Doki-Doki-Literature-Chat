@@ -1,5 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself
 
+import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 
 interface IntroduceRouting {
@@ -9,6 +10,6 @@ interface IntroduceRouting {
 class IntroduceRouter(private val view: IntroduceView): IntroduceRouting {
 
     override fun navigateToChatList(userId: UserIdEntity) {
-        TODO("Not yet implemented")
+        Log.d("butter_knife", userId.toString())
     }
 }

@@ -11,7 +11,7 @@ data class UserDataEntity (
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")
-    var id: Long?,
+    var id: Long = 0,
 
     @ColumnInfo(name = "name")
     var name: String,
@@ -23,12 +23,21 @@ data class UserDataEntity (
     var picture: String
 )  {
 
-    constructor(id: Long?, userLoginEntity: UserLoginEntity): this (
-        id = id,
+    /**
+     * Constructor for INSERT
+     */
+    constructor(userLoginEntity: UserLoginEntity): this (
         name = userLoginEntity.name,
         job = userLoginEntity.job,
         picture = userLoginEntity.picture
     )
+
+    /**
+     * Constructor for UPDATE
+     */
+    constructor(id: Long, userLoginEntity: UserLoginEntity): this(userLoginEntity) {
+        this.id = id
+    }
 }
 
 

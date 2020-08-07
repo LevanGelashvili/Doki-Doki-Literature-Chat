@@ -15,12 +15,7 @@ class IntroducePresenter(private val router: IntroduceRouting, private val intro
         val loginEntity = userModel.toUserLoginEntity()
 
         introducingUseCase.verify(loginEntity) { userIdEntity ->
-            if (userIdEntity == null) {
-                // TODO: Display error message
-            } else {
-                userVerified(userIdEntity)
-            }
-
+            userVerified(userIdEntity)
         }
     }
 
