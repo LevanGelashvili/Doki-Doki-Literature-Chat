@@ -19,7 +19,6 @@ interface DatabaseService {
      */
     fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit)
 
-
     /**
      * Takes a chat delete entity and deletes chat from database
      */
@@ -30,4 +29,15 @@ interface DatabaseService {
      * Handles everything necessary for chat creation
      */
     fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit)
+
+    /**
+     * Inserts a message into a database
+     */
+    fun insertMessage(messageEntity: MessageEntity)
+
+    /**
+     * Takes chat id entity and
+     * Returns list of messages from that chat
+     */
+    fun fetchMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
 }
