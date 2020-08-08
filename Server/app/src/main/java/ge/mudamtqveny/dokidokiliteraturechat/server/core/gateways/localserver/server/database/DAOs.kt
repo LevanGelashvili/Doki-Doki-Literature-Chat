@@ -47,6 +47,7 @@ interface ChatDAO {
     @Insert(entity = ChatDataEntity::class, onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChat(chat: ChatDataEntity): Long
 
-    @Query("delete from $CHAT_TABLE where chat_id == :chatId")
+    @Query("delete from $CHAT_TABLE where id == :chatId")
     suspend fun deleteChat(chatId: Long)
+
 }

@@ -29,5 +29,5 @@ interface DatabaseService {
      * Takes a chat insert entity (two user Id's) and inserts it into a database
      * Handles everything necessary for chat creation
      */
-    fun insertChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit)
+    fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit)
 }
