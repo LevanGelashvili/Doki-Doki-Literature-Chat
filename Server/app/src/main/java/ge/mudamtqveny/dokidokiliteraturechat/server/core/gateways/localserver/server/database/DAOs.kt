@@ -36,7 +36,8 @@ interface ChatDAO {
         "       m.date AS date\n" +
         "  FROM $MESSAGE_TABLE m\n" +
         "  LEFT JOIN $USER_TABLE f ON (m.user_id_to = f.user_id)\n"+
-        " WHERE (m.chat_id, m.date) IN (SELECT chat_id,\n" +
+        " WHERE m.user_id_from = :userId AND" +
+        "       (m.chat_id, m.date) IN (SELECT chat_id,\n" +
         "                                      MAX(date)\n" +
         "                                 FROM $MESSAGE_TABLE\n" +
         "                                GROUP BY chat_id)"
