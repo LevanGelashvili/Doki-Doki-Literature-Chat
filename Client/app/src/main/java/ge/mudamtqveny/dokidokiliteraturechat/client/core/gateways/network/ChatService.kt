@@ -20,6 +20,6 @@ interface ChatService {
     fun verifyUser(@Body loginEntity: UserLoginEntity): Call<UserIdEntity>
 
     @Headers("Content-Type: application/json")
-    @GET("chats")
-    fun fetchChatList(userIdEntity: UserIdEntity): Call<List<ChatPresentingEntity>>
+    @POST("chats")
+    fun fetchChatList(@Body userIdEntity: UserIdEntity): Call<List<ChatPresentingEntity>>
 }

@@ -12,7 +12,7 @@ class ChatListHandler: HttpHandler {
 
     override fun handle(exchange: HttpExchange) {
         when (exchange.requestMethod) {
-            "GET" -> {
+            "POST" -> {
                 val userIdEntity = exchangeToObject(exchange, UserIdEntity::class.java)
                 LocalRoomDatabase.getInstance().fetchChatList(userIdEntity) { chatList ->
                     sendResponse(exchange, objectToJSON(chatList))

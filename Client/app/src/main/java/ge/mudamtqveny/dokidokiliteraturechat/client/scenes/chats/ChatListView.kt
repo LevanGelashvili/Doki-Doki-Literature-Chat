@@ -15,5 +15,6 @@ class ChatListView: Fragment(), ChatListViewing {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ChatListConfigurator(this).configure()
+        presenter.handleOnCreate()
     }
 }
