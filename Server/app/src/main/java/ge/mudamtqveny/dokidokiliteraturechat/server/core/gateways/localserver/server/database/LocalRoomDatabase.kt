@@ -1,6 +1,5 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
 import androidx.room.Database
@@ -43,8 +42,21 @@ class LocalRoomDatabase: DatabaseService {
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
-            val chatList = database.getChatDAO().getUserChats(userIdEntity.id)
-            completionHandler(chatList)
+            val chatListDataEntities = database.getChatDAO().getUserChats(userIdEntity.id)
+            val chatListEntities = chatListDataEntities.map {
+                ChatPresentingEntity (
+                    it.chatId,
+                    it.lastMessage,
+                    it.lastMessageDate,
+                    UserEntity (
+                        it.friendId,
+                        it.friendName,
+                        it.friendJob,
+                        it.friendAvatar
+                    )
+                )
+            }
+            completionHandler(chatListEntities)
         }
     }
 

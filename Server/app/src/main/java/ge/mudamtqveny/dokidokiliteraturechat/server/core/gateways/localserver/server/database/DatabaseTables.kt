@@ -70,7 +70,29 @@ data class ChatDataEntity (
     )
 }
 
+data class ChatPresentingDataEntity (
 
+    @ColumnInfo(name = "chat_id")
+    val chatId: Long,
+
+    @ColumnInfo(name = "user_id")
+    val friendId: Long,
+
+    @ColumnInfo(name = "name")
+    val friendName: String,
+
+    @ColumnInfo(name = "what_i_do")
+    val friendJob: String,
+
+    @ColumnInfo(name = "picture")
+    val friendAvatar: String,
+
+    @ColumnInfo(name = "text")
+    val lastMessage: String,
+
+    @ColumnInfo(name = "date")
+    val lastMessageDate: Long
+)
 
 @Entity(
     tableName = MESSAGE_TABLE,

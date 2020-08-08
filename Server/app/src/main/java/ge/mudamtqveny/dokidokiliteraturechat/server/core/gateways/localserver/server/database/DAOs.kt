@@ -1,7 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
 import androidx.room.*
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.MessagePresentingEntity
 
 const val USER_TABLE = "users"
@@ -31,8 +30,10 @@ interface ChatDAO {
     @Query (
         "" +
         "SELECT m.chat_id AS chat_id,\n" +
-        "       f.picture AS picture,\n" +
+        "       f.user_id AS user_id,\n" +
         "       f.name AS name,\n" +
+        "       f.what_i_do AS what_i_do,\n" +
+        "       f.picture AS picture,\n" +
         "       m.text AS text,\n" +
         "       m.date AS date\n" +
         "  FROM $MESSAGE_TABLE m\n" +
@@ -43,7 +44,7 @@ interface ChatDAO {
         "                                 FROM $MESSAGE_TABLE\n" +
         "                                GROUP BY chat_id)"
     )
-    suspend fun getUserChats(userId: Long): List<ChatPresentingEntity>
+    suspend fun getUserChats(userId: Long): List<ChatPresentingDataEntity>
 
     @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId")
     suspend fun getMessagesFromChat(chatId: Long): List<MessagePresentingEntity>
