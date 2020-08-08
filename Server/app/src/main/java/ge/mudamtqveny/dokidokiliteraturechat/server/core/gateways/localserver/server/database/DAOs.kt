@@ -33,11 +33,13 @@ interface ChatDAO {
         "       f.picture AS picture,\n" +
         "       f.name AS name,\n" +
         "       m.text AS text,\n" +
-        "       MAX(m.date) AS date\n" +
+        "       m.date AS date\n" +
         "  FROM $MESSAGE_TABLE m\n" +
-        "  LEFT JOIN $USER_TABLE f ON (f.user_id = m.user_id_to)\n"+
-        " WHERE m.user_id_from == :userId\n" +
-        " GROUP BY m.chat_id\n"
+        "  LEFT JOIN $USER_TABLE f ON (m.user_id_to = f.user_id)\n"+
+        " WHERE (m.chat_id, m.date) IN (SELECT chat_id,\n" +
+        "                                      MAX(date)\n" +
+        "                                 FROM $MESSAGE_TABLE\n" +
+        "                                GROUP BY chat_id)"
     )
     suspend fun getUserChats(userId: Long): List<ChatPresentingEntity>
 
