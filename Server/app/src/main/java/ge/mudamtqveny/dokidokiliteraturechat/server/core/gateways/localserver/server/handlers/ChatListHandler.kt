@@ -2,8 +2,10 @@ package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.s
 
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.LocalRoomDatabase
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.exchangeToObject
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.objectToJSON
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.sendResponse
 
 class ChatListHandler: HttpHandler {
@@ -12,7 +14,9 @@ class ChatListHandler: HttpHandler {
         when (exchange.requestMethod) {
             "GET" -> {
                 val userIdEntity = exchangeToObject(exchange, UserIdEntity::class.java)
-                sendResponse(exchange, "")
+                LocalRoomDatabase.getInstance().fetchChatList(userIdEntity) { chatList ->
+                    sendResponse(exchange, objectToJSON(chatList))
+                }
             }
         }
     }

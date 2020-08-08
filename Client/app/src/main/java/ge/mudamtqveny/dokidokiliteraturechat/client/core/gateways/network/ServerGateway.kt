@@ -49,7 +49,9 @@ class ServerGateway: ConnectionGateway, LoginUserGateway {
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                completionHandler(true)
+                if (response.isSuccessful)
+                    completionHandler(true)
+                else completionHandler(false)
             }
         })
     }
@@ -60,12 +62,15 @@ class ServerGateway: ConnectionGateway, LoginUserGateway {
 
         client.verifyUser(loginEntity).enqueue(object: Callback<UserIdEntity> {
 
-            override fun onFailure(call: Call<UserIdEntity>, t: Throwable) { }
+            override fun onFailure(call: Call<UserIdEntity>, t: Throwable) {
+                // TODO: Error Handling
+            }
 
             override fun onResponse(call: Call<UserIdEntity>, response: Response<UserIdEntity>) {
                 if (response.isSuccessful) {
                     completionHandler(response.body()!!)
                 }
+                // TODO: Error Handling
             }
         })
     }

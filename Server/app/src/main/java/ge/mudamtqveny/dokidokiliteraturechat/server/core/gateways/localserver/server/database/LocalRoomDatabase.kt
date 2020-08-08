@@ -1,7 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import android.util.Log
 import androidx.room.*
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.scenes.server_status.ServerView
@@ -15,7 +15,7 @@ class LocalRoomDatabase: DatabaseService {
         private var database = Room.databaseBuilder(ServerView.context, ChatDatabase::class.java, "database").build()
         private val instance = LocalRoomDatabase()
 
-        @Synchronized fun getInstance(): DatabaseService {
+        fun getInstance(): DatabaseService {
             return instance
         }
     }
@@ -35,6 +35,14 @@ class LocalRoomDatabase: DatabaseService {
             }
 
             completionHandler(resultUser)
+        }
+    }
+
+    override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val dao = database.getChatDAO()
+            val chatList = dao.getUserChats(userIdEntity.id)
+            completionHandler(chatList)
         }
     }
 }
