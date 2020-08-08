@@ -1,10 +1,11 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats
 
+import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.ChatListingUseCase
 
 interface ChatListPresenting {
-
+    fun handleOnCreate()
 }
 
 class ChatListPresenter (
@@ -16,4 +17,13 @@ class ChatListPresenter (
 
 ): ChatListPresenting {
 
+    override fun handleOnCreate() {
+        fetchChatList()
+    }
+
+    private fun fetchChatList() {
+        chatListUseCase.fetchChatList(parameters.userIdEntity) {
+            Log.d("butter_knife", it.toString())
+        }
+    }
 }

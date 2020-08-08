@@ -52,6 +52,4 @@ interface ChatService {
     @Headers("Content-Type: application/json")
     @POST("fetchMessages")
     fun fetchMessageList(chatIdEntity: ChatIdEntity): Call<List<MessagePresentingEntity>>
-
-
 }
