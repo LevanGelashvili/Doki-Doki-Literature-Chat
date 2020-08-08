@@ -10,7 +10,6 @@ class IntroduceConfigurator(private val view: IntroduceView) {
         val gateway = ServerGateway()
         val introduceUseCase = IntroduceUseCase(gateway)
         val presenter = IntroducePresenter(router, introduceUseCase)
-
         view.presenter = presenter
     }
 }
