@@ -40,4 +40,10 @@ interface ChatDAO {
         " GROUP BY m.chat_id\n"
     )
     suspend fun getUserChats(userId: Long): List<ChatPresentingEntity>
+
+    @Insert(entity = ChatDataEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertChat(chat: ChatDataEntity): Long
+
+    @Query("delete from $CHAT_TABLE where chat_id == :chatId")
+    suspend fun deleteChat(chatId: Long)
 }

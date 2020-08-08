@@ -1,9 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server
 
 import com.sun.net.httpserver.HttpServer
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.handlers.ChatListHandler
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.handlers.ConnectHandler
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.handlers.VerifyHandler
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.handlers.*
 import java.net.InetSocketAddress
 import java.util.concurrent.Executors
 
@@ -15,6 +13,8 @@ class ServerFactory {
             createContext("/connect", ConnectHandler())
             createContext("/verify", VerifyHandler())
             createContext("/chats", ChatListHandler())
+            createContext("/deleteChat", DeleteChatHandler())
+            createContext("/insertChat", InsertChatHandler())
         }
     }
 }

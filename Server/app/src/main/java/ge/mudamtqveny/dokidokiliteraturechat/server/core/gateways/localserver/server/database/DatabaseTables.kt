@@ -54,11 +54,19 @@ data class ChatDataEntity (
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "chat_id")
-    var id: Long,
+    var id: Long = 0,
 
     @ColumnInfo(name = "user_id")
     var userID: Long
-) // TODO: CONSTRUCTOR
+) {
+
+    /**
+     *  Constructor for INSERT
+     */
+    constructor(passedId: Long): this (
+        userID = passedId
+    )
+}
 
 
 

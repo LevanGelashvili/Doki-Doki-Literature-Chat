@@ -26,3 +26,16 @@ data class MessageEntity (
     var id: Long?
     // TODO
 )
+
+data class ChatInsertEntity (
+    val initiatorUserId: Long,
+    val otherUserId: Long
+)
+
+data class ChatDeleteEntity (
+    val id: Long
+)
+
+data class ChatIdEntity (
+    val id: Long
+)

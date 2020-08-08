@@ -1,9 +1,12 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import androidx.room.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.scenes.server_status.ServerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -43,6 +46,28 @@ class LocalRoomDatabase: DatabaseService {
             val dao = database.getChatDAO()
             val chatList = dao.getUserChats(userIdEntity.id)
             completionHandler(chatList)
+        }
+    }
+
+    override fun deleteChat(chatDeleteEntity: ChatDeleteEntity) {
+        GlobalScope.launch(Dispatchers.IO) {
+            database.getChatDAO().deleteChat(chatDeleteEntity.id)
+        }
+    }
+
+    override fun insertChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit) {
+
+        GlobalScope.launch(Dispatchers.IO) {
+
+            val initiatorChatData = ChatDataEntity(chatInsertEntity.initiatorUserId)
+            val otherChatData = ChatDataEntity(chatInsertEntity.otherUserId)
+
+            val initiatorChatId = database.getChatDAO().insertChat(initiatorChatData)
+            database.getChatDAO().insertChat(otherChatData)
+
+            //TODO: Insert placeholder message
+
+            completionHandler(ChatIdEntity(initiatorChatId))
         }
     }
 }
