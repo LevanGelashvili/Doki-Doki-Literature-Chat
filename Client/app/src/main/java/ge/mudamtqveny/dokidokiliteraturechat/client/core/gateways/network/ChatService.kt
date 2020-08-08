@@ -1,5 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
 import retrofit2.Call
@@ -17,4 +18,8 @@ interface ChatService {
     @Headers("Content-Type: application/json")
     @POST("verify")
     fun verifyUser(@Body loginEntity: UserLoginEntity): Call<UserIdEntity>
+
+    @Headers("Content-Type: application/json")
+    @GET("chats")
+    fun fetchChatList(userIdEntity: UserIdEntity): Call<List<ChatPresentingEntity>>
 }

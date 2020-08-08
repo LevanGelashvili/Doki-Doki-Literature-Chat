@@ -1,7 +1,9 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ChatListGateway
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ConnectionGateway
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.LoginUserGateway
 import okhttp3.OkHttpClient
@@ -13,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServerGateway: ConnectionGateway, LoginUserGateway {
+class ServerGateway: ConnectionGateway, LoginUserGateway, ChatListGateway {
 
     companion object {
 
@@ -67,6 +69,25 @@ class ServerGateway: ConnectionGateway, LoginUserGateway {
             }
 
             override fun onResponse(call: Call<UserIdEntity>, response: Response<UserIdEntity>) {
+                if (response.isSuccessful) {
+                    completionHandler(response.body()!!)
+                }
+                // TODO: Error Handling
+            }
+        })
+    }
+
+    /** ChatListGateway part */
+
+    override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
+
+        client.fetchChatList(userIdEntity).enqueue(object: Callback<List<ChatPresentingEntity>> {
+
+            override fun onFailure(call: Call<List<ChatPresentingEntity>>, t: Throwable) {
+                // TODO: Error Handling
+            }
+
+            override fun onResponse(call: Call<List<ChatPresentingEntity>>, response: Response<List<ChatPresentingEntity>>) {
                 if (response.isSuccessful) {
                     completionHandler(response.body()!!)
                 }
