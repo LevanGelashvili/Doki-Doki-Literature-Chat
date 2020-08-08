@@ -51,15 +51,17 @@ class LocalRoomDatabase: DatabaseService {
 
     override fun deleteChat(chatDeleteEntity: ChatDeleteEntity) {
         GlobalScope.launch(Dispatchers.IO) {
-            database.getChatDAO().deleteChat(chatDeleteEntity.id)
+            //database.getChatDAO().deleteChat(chatDeleteEntity.id)
         }
     }
 
-    override fun insertChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit) {
+    override fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit) {
 
         GlobalScope.launch(Dispatchers.IO) {
 
-            val initiatorChatData = ChatDataEntity(chatInsertEntity.initiatorUserId)
+
+
+            /*val initiatorChatData = ChatDataEntity(chatInsertEntity.initiatorUserId)
             val otherChatData = ChatDataEntity(chatInsertEntity.otherUserId)
 
             val initiatorChatId = database.getChatDAO().insertChat(initiatorChatData)
@@ -67,7 +69,7 @@ class LocalRoomDatabase: DatabaseService {
 
             //TODO: Insert placeholder message
 
-            completionHandler(ChatIdEntity(initiatorChatId))
+            completionHandler(ChatIdEntity(initiatorChatId))*/
         }
     }
 }

@@ -14,7 +14,7 @@ class InsertChatHandler: HttpHandler {
         when (exchange.requestMethod) {
             "POST" -> {
                 val chatInsertEntity = exchangeToObject(exchange, ChatInsertEntity::class.java)
-                LocalRoomDatabase.getInstance().insertChat(chatInsertEntity) {
+                LocalRoomDatabase.getInstance().createChat(chatInsertEntity) {
                     sendResponse(exchange, objectToJSON(it))
                 }
             }

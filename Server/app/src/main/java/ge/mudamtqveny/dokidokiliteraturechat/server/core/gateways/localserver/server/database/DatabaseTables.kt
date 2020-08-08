@@ -1,9 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
 
 @Entity(tableName = USER_TABLE)
@@ -53,18 +50,22 @@ data class UserDataEntity (
 data class ChatDataEntity (
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "chat_id")
+    @ColumnInfo(name = "id")
     var id: Long = 0,
 
-    @ColumnInfo(name = "user_id")
+    @ColumnInfo(name = "chat_id")
+    var chatId: Long,
+
+    @ColumnInfo(name = "user_id", index = true)
     var userID: Long
 ) {
 
     /**
      *  Constructor for INSERT
      */
-    constructor(passedId: Long): this (
-        userID = passedId
+    constructor(passedId: Long, passedChatId: Long): this (
+        userID = passedId,
+        chatId = passedChatId
     )
 }
 
@@ -74,8 +75,7 @@ data class ChatDataEntity (
     tableName = MESSAGE_TABLE,
     foreignKeys = [
         ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_from"]),
-        ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_to"]),
-        ForeignKey(entity = ChatDataEntity::class, parentColumns = ["chat_id"], childColumns = ["chat_id"], onDelete = ForeignKey.CASCADE)
+        ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_to"])
     ]
 )
 data class MessageDataEntity (
@@ -84,13 +84,13 @@ data class MessageDataEntity (
     @ColumnInfo(name = "message_id")
     var messageID: Long,
 
-    @ColumnInfo(name = "user_id_from")
+    @ColumnInfo(name = "user_id_from", index = true)
     var userIDFrom: Long,
 
-    @ColumnInfo(name = "user_id_to")
+    @ColumnInfo(name = "user_id_to", index = true)
     var userIDTo: Long,
 
-    @ColumnInfo(name = "chat_id")
+    @ColumnInfo(name = "chat_id", index = true)
     var chatID: Long,
 
     @ColumnInfo(name = "text")
