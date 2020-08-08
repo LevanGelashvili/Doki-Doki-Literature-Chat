@@ -31,15 +31,15 @@ interface ChatService {
 
     @Headers("Content-Type: application/json")
     @POST("chats")
-    fun fetchChatList(userIdEntity: UserIdEntity): Call<List<ChatPresentingEntity>>
+    fun fetchChatList(@Body userIdEntity: UserIdEntity): Call<List<ChatPresentingEntity>>
 
     @Headers("Content-Type: application/json")
     @POST("deleteChat")
-    fun deleteChat(chatDeleteEntity: ChatDeleteEntity): Call<Void>
+    fun deleteChat(@Body chatDeleteEntity: ChatDeleteEntity): Call<Void>
 
     @Headers("Content-Type: application/json")
     @POST("insertChat")
-    fun insertChat(chatInsertEntity: ChatInsertEntity): Call<ChatIdEntity>
+    fun insertChat(@Body chatInsertEntity: ChatInsertEntity): Call<ChatIdEntity>
 
     /**
      * Messages
@@ -47,9 +47,9 @@ interface ChatService {
 
     @Headers("Content-Type: application/json")
     @POST("insertMessage")
-    fun sendMessage(messageEntity: MessageEntity): Call<Void>
+    fun sendMessage(@Body messageEntity: MessageEntity): Call<Void>
 
     @Headers("Content-Type: application/json")
     @POST("fetchMessages")
-    fun fetchMessageList(chatIdEntity: ChatIdEntity): Call<List<MessagePresentingEntity>>
+    fun fetchMessageList(@Body chatIdEntity: ChatIdEntity): Call<List<MessagePresentingEntity>>
 }
