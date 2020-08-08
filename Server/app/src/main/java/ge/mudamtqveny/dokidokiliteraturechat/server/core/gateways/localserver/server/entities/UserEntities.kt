@@ -17,3 +17,7 @@ data class UserLoginEntity (
     val job: String,
     val picture: String
 )
+
+data class UserSearchEntity (
+    val word: String
+)

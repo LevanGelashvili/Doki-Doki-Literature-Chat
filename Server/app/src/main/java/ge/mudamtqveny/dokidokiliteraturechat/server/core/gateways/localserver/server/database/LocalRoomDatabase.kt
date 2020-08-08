@@ -42,7 +42,8 @@ class LocalRoomDatabase: DatabaseService {
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
-            val chatListDataEntities = database.getChatDAO().getUserChats(userIdEntity.id)
+            val dao = database.getChatDAO()
+            val chatListDataEntities = dao.getUserChats(userIdEntity.id)
             val chatListEntities = chatListDataEntities.map {
                 ChatPresentingEntity (
                     it.chatId,
@@ -99,6 +100,20 @@ class LocalRoomDatabase: DatabaseService {
         GlobalScope.launch(Dispatchers.IO) {
             val chatMessages = database.getChatDAO().getMessagesFromChat(chatIdEntity.id)
             completionHandler(chatMessages)
+        }
+    }
+
+    override fun searchUsers(userSearchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit) {
+
+        GlobalScope.launch(Dispatchers.IO) {
+
+            val dao = database.getUserDAO()
+            val userDataEntities = dao.getUsersHavingInName(userSearchEntity.word)
+            val userEntities = userDataEntities.map {
+                UserEntity(it.id, it.name, it.job, it.picture)
+            }
+
+            completionHandler(userEntities)
         }
     }
 

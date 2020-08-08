@@ -39,4 +39,9 @@ interface DatabaseService {
      * Returns list of messages from that chat
      */
     fun fetchMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
+
+    /**
+     * Searches for users depending on userSearchEntity
+     */
+    fun searchUsers(userSearchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit)
 }

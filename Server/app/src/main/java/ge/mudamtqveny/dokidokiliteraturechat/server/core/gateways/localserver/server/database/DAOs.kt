@@ -22,6 +22,9 @@ interface UserDAO {
     /** For testing */
     @Query("select * from $USER_TABLE")
     suspend fun getAllUsers(): List<UserDataEntity>
+
+    @Query("SELECT * FROM $USER_TABLE WHERE name LIKE '%' || :substring  || '%'")
+    suspend fun getUsersHavingInName(substring: String): List<UserDataEntity>
 }
 
 @Dao
