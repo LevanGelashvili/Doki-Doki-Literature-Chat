@@ -1,13 +1,17 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities
 
-import androidx.room.ColumnInfo
+/** Chat Part */
 
 data class ChatPresentingEntity (
     val chatId: Long,
     val lastMessage: String,
     val lastMessageDate: Long,
     val friendUserEntity: UserEntity
+)
+
+data class ChatIdEntity (
+    val id: Long
 )
 
 data class ChatInsertEntity (
@@ -20,14 +24,7 @@ data class ChatDeleteEntity (
     val deleterUserId: Long
 )
 
-data class ChatIdEntity (
-    val id: Long
-)
-
-data class UnseenMessageEntity (
-    val idToFetchFrom: Long,
-    val chatId: Long
-)
+/** Message Part */
 
 data class MessageEntity (
     val chatId: Long,
@@ -38,16 +35,13 @@ data class MessageEntity (
 )
 
 data class MessagePresentingEntity (
-
-    @ColumnInfo(name = "user_id_from")
     val userIdFrom: Long,
-
-    @ColumnInfo(name = "user_id_to")
     val userIdTo: Long,
-
-    @ColumnInfo(name = "text")
     val text: String,
-
-    @ColumnInfo(name = "date")
     val date: Long
+)
+
+data class UnseenMessageEntity (
+    val idToFetchFrom: Long,
+    val chatId: Long
 )

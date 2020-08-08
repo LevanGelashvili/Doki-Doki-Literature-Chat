@@ -1,16 +1,13 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.entities
 
+/** Chat Part */
+
 data class ChatPresentingEntity (
     val chatId: Long,
     val lastMessage: String,
     val lastMessageDate: Long,
     val friendUserEntity: UserEntity
-)
-
-data class ChatDeleteEntity (
-    val chatId: Long,
-    val deleterUserId: Long
 )
 
 data class ChatIdEntity (
@@ -21,6 +18,13 @@ data class ChatInsertEntity (
     val initUserId: Long,
     val otherUserId: Long
 )
+
+data class ChatDeleteEntity (
+    val chatId: Long,
+    val deleterUserId: Long
+)
+
+/** Message Part */
 
 data class MessageEntity (
     val chatId: Long,

@@ -1,31 +1,11 @@
-package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import androidx.room.*
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.MessagePresentingEntity
+package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos
 
-const val USER_TABLE = "users"
-const val CHAT_TABLE = "chats"
-const val MESSAGE_TABLE = "messages"
-
-@Dao
-interface UserDAO {
-
-    @Insert(entity = UserDataEntity::class, onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertUser(user: UserDataEntity): Long
-
-    @Update
-    suspend fun updateUser(user: UserDataEntity)
-
-    @Query("select * from $USER_TABLE where name == :nickname")
-    suspend fun userGivenNickname(nickname: String): UserDataEntity?
-
-    @Query("SELECT * FROM $USER_TABLE WHERE name LIKE '%' || :substring  || '%'")
-    suspend fun getUsersHavingInName(substring: String): List<UserDataEntity>
-
-    /** For testing */
-    @Query("select * from $USER_TABLE")
-    suspend fun getAllUsers(): List<UserDataEntity>
-}
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.*
 
 @Dao
 interface ChatDAO {
@@ -53,10 +33,10 @@ interface ChatDAO {
     suspend fun getUserChats(userId: Long): List<ChatPresentingDataEntity>
 
     @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId")
-    suspend fun getMessagesFromChat(chatId: Long): List<MessagePresentingEntity>
+    suspend fun getMessagesFromChat(chatId: Long): List<MessagePresentingDataEntity>
 
     @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId and message_id > :idToFetchFrom")
-    suspend fun getUnseenMessages(idToFetchFrom: Long, chatId: Long): List<MessagePresentingEntity>
+    suspend fun getUnseenMessages(idToFetchFrom: Long, chatId: Long): List<MessagePresentingDataEntity>
 
     @Insert(entity = ChatDataEntity::class, onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChat(chat: ChatDataEntity): Long
