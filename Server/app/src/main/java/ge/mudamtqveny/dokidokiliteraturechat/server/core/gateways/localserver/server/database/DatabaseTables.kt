@@ -1,6 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
 import androidx.room.*
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.MessageEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UserLoginEntity
 
 @Entity(tableName = USER_TABLE)
@@ -82,7 +83,7 @@ data class MessageDataEntity (
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "message_id")
-    var messageID: Long,
+    var messageID: Long = 0,
 
     @ColumnInfo(name = "user_id_from", index = true)
     var userIDFrom: Long,
@@ -98,4 +99,13 @@ data class MessageDataEntity (
 
     @ColumnInfo(name = "date")
     var date: Long
-) // TODO: CONSTRUCTOR
+) {
+
+    constructor(message: MessageEntity): this (
+        userIDFrom = message.userIdFrom,
+        userIDTo = message.userIdTo,
+        chatID = message.chatId,
+        text = message.text,
+        date = message.date
+    )
+}

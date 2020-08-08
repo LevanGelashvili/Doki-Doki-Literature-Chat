@@ -22,18 +22,36 @@ data class ChatPresentingEntity (
 )
 
 data class MessageEntity (
+    val chatId: Long,
+    val userIdFrom: Long,
+    val userIdTo: Long,
+    val text: String,
+    val date: Long
+)
 
-    var id: Long?
-    // TODO
+data class MessagePresentingEntity (
+
+    @ColumnInfo(name = "user_id_from")
+    val userIdFrom: Long,
+
+    @ColumnInfo(name = "user_id_to")
+    val userIdTo: Long,
+
+    @ColumnInfo(name = "text")
+    val text: String,
+
+    @ColumnInfo(name = "date")
+    val date: Long
 )
 
 data class ChatInsertEntity (
-    val initiatorUserId: Long,
+    val initUserId: Long,
     val otherUserId: Long
 )
 
 data class ChatDeleteEntity (
-    val id: Long
+    val chatId: Long,
+    val deleterUserId: Long
 )
 
 data class ChatIdEntity (
