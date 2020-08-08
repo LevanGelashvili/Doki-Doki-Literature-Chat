@@ -19,5 +19,21 @@
         android:id="@+id/introduceView"
         android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.IntroduceView"
         android:label="Introduce"
-        tools:layout="@layout/introduce_fragment"/>
+        tools:layout="@layout/introduce_fragment">
+        <action
+            android:id="@+id/actionIntroduceViewToChatListView"
+            app:destination="@id/chatListView" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatListView"
+        android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.ChatListView"
+        android:label="ChatListView" >
+        <action
+            android:id="@+id/actionChatListViewToMessagesView"
+            app:destination="@id/messagesView" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagesView"
+        android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesView"
+        android:label="MessagesView" />
 </navigation>

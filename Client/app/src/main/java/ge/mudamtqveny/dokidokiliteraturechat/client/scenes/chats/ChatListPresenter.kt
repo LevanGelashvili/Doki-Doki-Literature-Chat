@@ -10,6 +10,7 @@ interface ChatListPresenting {
 class ChatListPresenter (
 
     private val view: ChatListViewing,
+    private val parameters: ChatListParameters,
     private val chatListUseCase: ChatListingUseCase,
     private val router: ChatListRouting
 
