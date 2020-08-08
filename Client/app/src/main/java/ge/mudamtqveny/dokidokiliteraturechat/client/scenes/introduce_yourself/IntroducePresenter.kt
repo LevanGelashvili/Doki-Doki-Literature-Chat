@@ -10,9 +10,9 @@ interface IntroducePresenting {
 
 class IntroducePresenter(private val router: IntroduceRouting, private val introducingUseCase: IntroducingUseCase): IntroducePresenting {
 
-    override fun verifyUser(userModel: IntroduceUserViewModel) {
+    override fun verifyUser(introduceUserViewModel: IntroduceUserViewModel) {
 
-        val loginEntity = userModel.toUserLoginEntity()
+        val loginEntity = introduceUserViewModel.toUserLoginEntity()
 
         introducingUseCase.verify(loginEntity) { userIdEntity ->
             userVerified(userIdEntity)

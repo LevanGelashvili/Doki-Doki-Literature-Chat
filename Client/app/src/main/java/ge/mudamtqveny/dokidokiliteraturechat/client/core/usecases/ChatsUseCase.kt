@@ -5,18 +5,18 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ChatGateway
 
 interface ChatListingUseCase {
-
-    /**
-     * Fetches Chat List of User specified by userIdEntity
-     */
     fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit)
+}
 
+interface ChatDeletingUseCase {
     fun deleteChat(chatDeleteEntity: ChatDeleteEntity)
+}
 
+interface ChatCreatingUseCase {
     fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit)
 }
 
-class ChatsUseCase(private val gateway: ChatGateway): ChatListingUseCase {
+class ChatsUseCase(private val gateway: ChatGateway): ChatListingUseCase, ChatDeletingUseCase, ChatCreatingUseCase {
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
         gateway.fetchChatList(userIdEntity, completionHandler)

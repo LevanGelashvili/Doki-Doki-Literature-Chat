@@ -1,7 +1,9 @@
+
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.*
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network.callbacks.DefaultCallback
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -57,20 +59,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     /** LoginUserGateway Part */
 
     override fun verify(loginEntity: UserLoginEntity, completionHandler: (UserIdEntity) -> (Unit)) {
-
-        client.verifyUser(loginEntity).enqueue(object: Callback<UserIdEntity> {
-
-            override fun onFailure(call: Call<UserIdEntity>, t: Throwable) {
-                // TODO: Error Handling
-            }
-
-            override fun onResponse(call: Call<UserIdEntity>, response: Response<UserIdEntity>) {
-                if (response.isSuccessful) {
-                    completionHandler(response.body()!!)
-                }
-                // TODO: Error Handling
-            }
-        })
+        client.verifyUser(loginEntity).enqueue(DefaultCallback(completionHandler))
     }
 
     /** ChatGateway part */
@@ -80,38 +69,11 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     }
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
-
-        client.fetchChatList(userIdEntity).enqueue(object: Callback<List<ChatPresentingEntity>> {
-
-            override fun onFailure(call: Call<List<ChatPresentingEntity>>, t: Throwable) {
-                // TODO: Error Handling
-            }
-
-            override fun onResponse(call: Call<List<ChatPresentingEntity>>, response: Response<List<ChatPresentingEntity>>) {
-                if (response.isSuccessful) {
-                    completionHandler(response.body()!!)
-                }
-                // TODO: Error Handling
-            }
-        })
+        client.fetchChatList(userIdEntity).enqueue(DefaultCallback(completionHandler))
     }
 
     override fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit) {
-
-        client.insertChat(chatInsertEntity).enqueue(object: Callback<ChatIdEntity> {
-
-            override fun onFailure(call: Call<ChatIdEntity>, t: Throwable) {
-                // TODO: Error Handling
-            }
-
-            override fun onResponse(call: Call<ChatIdEntity>, response: Response<ChatIdEntity>) {
-                if (response.isSuccessful) {
-                    completionHandler(response.body()!!)
-                }
-                // TODO: Error Handling
-            }
-
-        })
+        client.insertChat(chatInsertEntity).enqueue(DefaultCallback(completionHandler))
     }
 
     /** MessageGateway part */
@@ -121,54 +83,16 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     }
 
     override fun getMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {
-
-        client.fetchMessageList(chatIdEntity).enqueue(object: Callback<List<MessagePresentingEntity>> {
-
-            override fun onFailure(call: Call<List<MessagePresentingEntity>>, t: Throwable) {
-                // TODO: Error Handling
-            }
-
-            override fun onResponse(call: Call<List<MessagePresentingEntity>>, response: Response<List<MessagePresentingEntity>>) {
-                if (response.isSuccessful) {
-                    completionHandler(response.body()!!)
-                }
-                // TODO: Error Handling
-            }
-
-        })
+        client.fetchMessageList(chatIdEntity).enqueue(DefaultCallback(completionHandler))
     }
 
     override fun getUnseenMessageList(unseenMessage: UnseenMessageEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {
-
-        client.fetchUnseenMessageList(unseenMessage).enqueue(object: Callback<List<MessagePresentingEntity>> {
-
-            override fun onFailure(call: Call<List<MessagePresentingEntity>>, t: Throwable) {
-                // TODO: Error Handling
-            }
-
-            override fun onResponse(call: Call<List<MessagePresentingEntity>>, response: Response<List<MessagePresentingEntity>>) {
-                if (response.isSuccessful) {
-                    completionHandler(response.body()!!)
-                }
-                // TODO: Error Handling
-            }
-        })
+        client.fetchUnseenMessageList(unseenMessage).enqueue(DefaultCallback(completionHandler))
     }
 
+    /** UserGateway part */
+
     override fun fetchUsersSatisfying(searchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit) {
-
-        client.fetchUsersSatisfying(searchEntity).enqueue(object: Callback<List<UserEntity>>{
-
-            override fun onFailure(call: Call<List<UserEntity>>, t: Throwable) {
-                // TODO: Error Handling
-            }
-
-            override fun onResponse(call: Call<List<UserEntity>>, response: Response<List<UserEntity>>) {
-                if (response.isSuccessful) {
-                    completionHandler(response.body()!!)
-                }
-                // TODO: Error Handling
-            }
-        })
+        client.fetchUsersSatisfying(searchEntity).enqueue(DefaultCallback(completionHandler))
     }
 }
