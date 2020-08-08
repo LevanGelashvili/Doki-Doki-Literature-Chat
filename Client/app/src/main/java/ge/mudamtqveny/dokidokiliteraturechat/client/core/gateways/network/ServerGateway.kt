@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGateway {
+class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGateway, UserGateway {
 
     companion object {
 
@@ -135,6 +135,23 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
                 // TODO: Error Handling
             }
 
+        })
+    }
+
+    override fun fetchUsersSatisfying(searchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit) {
+
+        client.fetchUsersSatisfying(searchEntity).enqueue(object: Callback<List<UserEntity>>{
+
+            override fun onFailure(call: Call<List<UserEntity>>, t: Throwable) {
+                // TODO: Error Handling
+            }
+
+            override fun onResponse(call: Call<List<UserEntity>>, response: Response<List<UserEntity>>) {
+                if (response.isSuccessful) {
+                    completionHandler(response.body()!!)
+                }
+                // TODO: Error Handling
+            }
         })
     }
 }

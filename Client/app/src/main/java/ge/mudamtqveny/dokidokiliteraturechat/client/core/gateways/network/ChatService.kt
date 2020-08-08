@@ -18,12 +18,16 @@ interface ChatService {
     fun initiateConnection(): Call<Void>
 
     /**
-     * Verification
+     * Users
      */
 
     @Headers("Content-Type: application/json")
     @POST("verify")
     fun verifyUser(@Body loginEntity: UserLoginEntity): Call<UserIdEntity>
+
+    @Headers("Content-Type: application/json")
+    @POST("users")
+    fun fetchUsersSatisfying(@Body searchEntity: UserSearchEntity): Call<List<UserEntity>>
 
     /**
      * Chats

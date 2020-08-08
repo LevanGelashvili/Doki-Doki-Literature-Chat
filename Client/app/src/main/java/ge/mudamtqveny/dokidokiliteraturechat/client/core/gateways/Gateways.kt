@@ -21,3 +21,7 @@ interface MessageGateway {
     fun sendMessage(messageEntity: MessageEntity)
     fun getMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
 }
+
+interface UserGateway {
+    fun fetchUsersSatisfying(searchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit)
+}
