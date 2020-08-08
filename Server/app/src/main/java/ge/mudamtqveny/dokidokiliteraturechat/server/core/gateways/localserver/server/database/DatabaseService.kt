@@ -41,6 +41,12 @@ interface DatabaseService {
     fun fetchMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
 
     /**
+     * Takes chat id entity and
+     * Returns list of messages from that chat that user has received, but has not seen yet
+     */
+    fun fetchUnseenMessageList(unseenMessageEntity: UnseenMessageEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
+
+    /**
      * Searches for users depending on userSearchEntity
      */
     fun searchUsers(userSearchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit)

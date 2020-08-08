@@ -138,6 +138,23 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
         })
     }
 
+    override fun getUnseenMessageList(unseenMessage: UnseenMessageEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {
+
+        client.fetchUnseenMessageList(unseenMessage).enqueue(object: Callback<List<MessagePresentingEntity>> {
+
+            override fun onFailure(call: Call<List<MessagePresentingEntity>>, t: Throwable) {
+                // TODO: Error Handling
+            }
+
+            override fun onResponse(call: Call<List<MessagePresentingEntity>>, response: Response<List<MessagePresentingEntity>>) {
+                if (response.isSuccessful) {
+                    completionHandler(response.body()!!)
+                }
+                // TODO: Error Handling
+            }
+        })
+    }
+
     override fun fetchUsersSatisfying(searchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit) {
 
         client.fetchUsersSatisfying(searchEntity).enqueue(object: Callback<List<UserEntity>>{

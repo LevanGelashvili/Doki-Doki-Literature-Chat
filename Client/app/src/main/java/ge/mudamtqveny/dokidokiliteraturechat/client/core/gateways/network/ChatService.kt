@@ -56,4 +56,8 @@ interface ChatService {
     @Headers("Content-Type: application/json")
     @POST("fetchMessages")
     fun fetchMessageList(@Body chatIdEntity: ChatIdEntity): Call<List<MessagePresentingEntity>>
+
+    @Headers("Content-Type: application/json")
+    @POST("fetchUnseenMessages")
+    fun fetchUnseenMessageList(@Body unseenMessageEntity: UnseenMessageEntity): Call<List<MessagePresentingEntity>>
 }

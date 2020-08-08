@@ -17,6 +17,7 @@ class ServerFactory {
             createContext("/insertChat", InsertChatHandler())
             createContext("/insertMessage", InsertMessageHandler())
             createContext("/fetchMessages", MessageListHandler())
+            createContext("/fetchUnseenMessages", UnseenMessageListHandler())
             createContext("/users", UserListHandler())
         }
     }

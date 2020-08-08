@@ -10,6 +10,25 @@ data class ChatPresentingEntity (
     val friendUserEntity: UserEntity
 )
 
+data class ChatInsertEntity (
+    val initUserId: Long,
+    val otherUserId: Long
+)
+
+data class ChatDeleteEntity (
+    val chatId: Long,
+    val deleterUserId: Long
+)
+
+data class ChatIdEntity (
+    val id: Long
+)
+
+data class UnseenMessageEntity (
+    val idToFetchFrom: Long,
+    val chatId: Long
+)
+
 data class MessageEntity (
     val chatId: Long,
     val userIdFrom: Long,
@@ -31,18 +50,4 @@ data class MessagePresentingEntity (
 
     @ColumnInfo(name = "date")
     val date: Long
-)
-
-data class ChatInsertEntity (
-    val initUserId: Long,
-    val otherUserId: Long
-)
-
-data class ChatDeleteEntity (
-    val chatId: Long,
-    val deleterUserId: Long
-)
-
-data class ChatIdEntity (
-    val id: Long
 )

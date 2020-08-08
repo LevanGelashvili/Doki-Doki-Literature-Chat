@@ -36,3 +36,8 @@ data class MessagePresentingEntity (
     val text: String,
     val date: Long
 )
+
+data class UnseenMessageEntity (
+    val idToFetchFrom: Long,
+    val chatId: Long
+)

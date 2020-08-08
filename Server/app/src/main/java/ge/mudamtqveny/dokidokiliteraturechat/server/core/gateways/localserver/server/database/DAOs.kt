@@ -19,12 +19,12 @@ interface UserDAO {
     @Query("select * from $USER_TABLE where name == :nickname")
     suspend fun userGivenNickname(nickname: String): UserDataEntity?
 
+    @Query("SELECT * FROM $USER_TABLE WHERE name LIKE '%' || :substring  || '%'")
+    suspend fun getUsersHavingInName(substring: String): List<UserDataEntity>
+
     /** For testing */
     @Query("select * from $USER_TABLE")
     suspend fun getAllUsers(): List<UserDataEntity>
-
-    @Query("SELECT * FROM $USER_TABLE WHERE name LIKE '%' || :substring  || '%'")
-    suspend fun getUsersHavingInName(substring: String): List<UserDataEntity>
 }
 
 @Dao
@@ -54,6 +54,9 @@ interface ChatDAO {
 
     @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId")
     suspend fun getMessagesFromChat(chatId: Long): List<MessagePresentingEntity>
+
+    @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId and message_id > :idToFetchFrom")
+    suspend fun getUnseenMessages(idToFetchFrom: Long, chatId: Long): List<MessagePresentingEntity>
 
     @Insert(entity = ChatDataEntity::class, onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChat(chat: ChatDataEntity): Long

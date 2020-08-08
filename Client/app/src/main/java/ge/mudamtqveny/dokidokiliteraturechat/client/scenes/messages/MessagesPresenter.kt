@@ -1,5 +1,8 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
+import android.util.Log
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.ServiceTimer
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
 
 interface MessagesPresenting {
@@ -12,7 +15,12 @@ interface MessagesPresenting {
 }
 
 
-class MessagesPresenter(private val router: MessagesRouting): MessagesPresenting {
+class MessagesPresenter(private val router: MessagesRouting): MessagesPresenting, TimerObserver {
+
+    private var timer = ServiceTimer(this, 2000).apply {
+        startService()
+        // TODO: StopService in navigate
+    }
 
     override fun goBackToChats() {
         router.navigateToChatList()
@@ -32,5 +40,9 @@ class MessagesPresenter(private val router: MessagesRouting): MessagesPresenting
 
     override fun messageCount(): Int {
         TODO("Not yet implemented")
+    }
+
+    override fun timerExpired() {
+        Log.d("Here", "timer arrived")
     }
 }

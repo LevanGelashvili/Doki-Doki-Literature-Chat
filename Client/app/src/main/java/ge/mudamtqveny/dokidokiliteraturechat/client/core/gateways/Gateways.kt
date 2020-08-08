@@ -20,6 +20,7 @@ interface ChatGateway {
 interface MessageGateway {
     fun sendMessage(messageEntity: MessageEntity)
     fun getMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
+    fun getUnseenMessageList(unseenMessage: UnseenMessageEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit)
 }
 
 interface UserGateway {
