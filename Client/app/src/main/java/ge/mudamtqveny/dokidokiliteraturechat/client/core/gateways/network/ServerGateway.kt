@@ -1,11 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatPresentingEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ChatListGateway
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.ConnectionGateway
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.LoginUserGateway
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -15,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServerGateway: ConnectionGateway, LoginUserGateway, ChatListGateway {
+class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGateway {
 
     companion object {
 
@@ -77,7 +73,11 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatListGateway {
         })
     }
 
-    /** ChatListGateway part */
+    /** ChatGateway part */
+
+    override fun deleteChat(chatDeleteEntity: ChatDeleteEntity) {
+        client.deleteChat(chatDeleteEntity)
+    }
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
 
@@ -93,6 +93,48 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatListGateway {
                 }
                 // TODO: Error Handling
             }
+        })
+    }
+
+    override fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit) {
+
+        client.insertChat(chatInsertEntity).enqueue(object: Callback<ChatIdEntity> {
+
+            override fun onFailure(call: Call<ChatIdEntity>, t: Throwable) {
+                // TODO: Error Handling
+            }
+
+            override fun onResponse(call: Call<ChatIdEntity>, response: Response<ChatIdEntity>) {
+                if (response.isSuccessful) {
+                    completionHandler(response.body()!!)
+                }
+                // TODO: Error Handling
+            }
+
+        })
+    }
+
+    /** MessageGateway part */
+
+    override fun sendMessage(messageEntity: MessageEntity) {
+        client.sendMessage(messageEntity)
+    }
+
+    override fun getMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {
+
+        client.fetchMessageList(chatIdEntity).enqueue(object: Callback<List<MessagePresentingEntity>> {
+
+            override fun onFailure(call: Call<List<MessagePresentingEntity>>, t: Throwable) {
+                // TODO: Error Handling
+            }
+
+            override fun onResponse(call: Call<List<MessagePresentingEntity>>, response: Response<List<MessagePresentingEntity>>) {
+                if (response.isSuccessful) {
+                    completionHandler(response.body()!!)
+                }
+                // TODO: Error Handling
+            }
+
         })
     }
 }
