@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/expanded_toolbar_constraint"
-    android:background="@color/colorPrimary"
+    android:background="@color/toolbar_color"
     android:layout_width="match_parent"
     android:layout_height="@dimen/expanded_toolbar_size">
 
@@ -42,7 +42,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/chevron_left"
 
-
         android:layout_marginBottom="@dimen/expanded_vertical_padding"
 
         app:layout_constraintBottom_toTopOf="@+id/expanded_name"
@@ -62,6 +61,6 @@
         android:layout_gravity="top|center_horizontal"
 
         android:src="@drawable/message_circle"
-        app:border_color="@android:color/white"
-        app:border_width="5dp"/>
+        app:civ_border_width="@dimen/border_width"
+        app:civ_border_color="@color/border_color"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

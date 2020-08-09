@@ -2,12 +2,13 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toolbar
+import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -31,13 +32,24 @@ class MessagesView: Fragment(), MessagesViewing {
     private lateinit var messageEditText: EditText
     private lateinit var messageAdapter: MessageAdapter
 
+    private lateinit var backImage: ImageView
+    private lateinit var userImage: ImageView
+    private lateinit var userName: TextView
+    private lateinit var userJob: TextView
+
     private lateinit var sendButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MessagesConfigurator(this).configure()
-        messageAdapter = MessageAdapter(presenter)
 
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        })
+
+        messageAdapter = MessageAdapter(presenter)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,6 +58,7 @@ class MessagesView: Fragment(), MessagesViewing {
 
         initEditText(view)
         initRecycler(view)
+        initUserFields(view)
 
         sendButton = view.findViewById(R.id.send_button)
         sendButton.setOnClickListener {
@@ -61,6 +74,7 @@ class MessagesView: Fragment(), MessagesViewing {
 
     override fun messageTyped() {
         val viewModel = MessageViewModel(messageEditText.text.toString(), System.currentTimeMillis())
+        messageEditText.setText("")
         presenter.sendMessage(viewModel)
     }
 
@@ -89,15 +103,35 @@ class MessagesView: Fragment(), MessagesViewing {
     private fun initEditText(view: View) {
         messageEditText = view.findViewById(R.id.message_editText)
 
-        /*messageEditText.setOnTouchListener { _: View, event: MotionEvent ->
+        messageEditText.setOnTouchListener { _: View, event: MotionEvent ->
             val rightDrawable = 2
+            val widthCoefficient = 1.75
             if(event.action == MotionEvent.ACTION_UP) {
-                if(event.rawX >= (messageEditText.right - messageEditText.compoundDrawables[rightDrawable].bounds.width())) {
+                if(event.rawX >= (messageEditText.right - messageEditText.compoundDrawables[rightDrawable].bounds.width() * widthCoefficient)) {
                     messageTyped()
                     true;
                 }
             }
             false;
-        }*/
+        }
+    }
+
+    private fun initUserFields(view: View) {
+
+        val viewModel = presenter.getToolbarViewModel()
+
+        backImage = view.findViewById(R.id.expanded_back_image)
+        backImage.setOnClickListener {
+            goBack()
+        }
+
+        userImage = view.findViewById(R.id.expanded_circle_image)
+        userImage.setImageBitmap(viewModel.bitmap)
+
+        userName = view.findViewById(R.id.expanded_name)
+        userName.text = viewModel.name
+
+        userJob = view.findViewById(R.id.expanded_job)
+        userJob.text = viewModel.job
     }
 }

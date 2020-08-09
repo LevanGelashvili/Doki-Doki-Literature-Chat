@@ -8,10 +8,10 @@
     <dimen name="message_bubble_margin">30dp</dimen>
     <dimen name="message_bubble_padding">20dp</dimen>
     <dimen name="message_bubble_width">250dp</dimen>
-    <dimen name="message_circle_size">20dp</dimen>
+    <dimen name="message_circle_size">28dp</dimen>
 
     <!--Messages Toolbar -->
-    <dimen name="expanded_horizontal_padding">50dp</dimen>
+    <dimen name="expanded_horizontal_padding">35dp</dimen>
     <dimen name="expanded_vertical_padding">15dp</dimen>
     <dimen name="expanded_toolbar_size">150dp</dimen>
 
@@ -20,8 +20,8 @@
     <dimen name="spacing_small">12dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
 
-    <dimen name="image_width">50dp</dimen>
+    <dimen name="image_width">65dp</dimen>
     <dimen name="image_final_width">32dp</dimen>
 
-    <dimen name="border_width">2dp</dimen>
+    <dimen name="border_width">3dp</dimen>
 </resources>

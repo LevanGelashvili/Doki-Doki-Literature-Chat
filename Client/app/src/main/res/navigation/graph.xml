@@ -35,5 +35,9 @@
     <fragment
         android:id="@+id/messagesView"
         android:name="ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesView"
-        android:label="MessagesView" />
+        android:label="MessagesView" >
+        <action
+            android:id="@+id/actionMessagesViewToChatList"
+            app:destination="@id/chatListView" />
+    </fragment>
 </navigation>

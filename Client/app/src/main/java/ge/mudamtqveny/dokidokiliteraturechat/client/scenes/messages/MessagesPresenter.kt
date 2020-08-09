@@ -3,16 +3,20 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessageEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessagePresentingEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageSendingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UnseenMessageListingUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.ChatListParameters
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.ToolbarUserViewModel
 
 interface MessagesPresenting {
     fun goBackToChats()
     fun sendMessage(messageViewModel: MessageViewModel)
+    fun getToolbarViewModel(): ToolbarUserViewModel
 
     fun isUserMessageAt(position: Int): Boolean
     fun viewModelAt(position: Int): MessageViewModel
@@ -36,7 +40,7 @@ class MessagesPresenter(
         fetchMessages()
     }
 
-    private var timer = ServiceTimer(this, 2000).apply {
+    private var timer = ServiceTimer(this, 3000).apply {
         startService()
     }
 
@@ -58,9 +62,14 @@ class MessagesPresenter(
         messageSendingUseCase.sendMessage(MessageEntity(parameters, messageViewModel))
     }
 
+    override fun getToolbarViewModel(): ToolbarUserViewModel {
+        return parameters.userEntity.toToolbarViewModel()
+    }
+
     override fun goBackToChats() {
         timer.stopService()
-        router.navigateToChatList()
+        val chatParameters = ChatListParameters(UserIdEntity(parameters.initUserId))
+        router.navigateToChatList(chatParameters)
     }
 
     override fun isUserMessageAt(position: Int): Boolean {

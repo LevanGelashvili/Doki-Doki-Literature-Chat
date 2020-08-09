@@ -85,7 +85,8 @@ class ChatListPresenter (
                 val parameters = MessagesParameters (
                     it.id,
                     parameters.userIdEntity.id,
-                    chat.friendUserEntity.id
+                    chat.friendUserEntity.id,
+                    chat.friendUserEntity
                 )
                 router.navigateToMessages(parameters)
             }
@@ -95,7 +96,8 @@ class ChatListPresenter (
             val parameters = MessagesParameters (
                 chat.chatId,
                 parameters.userIdEntity.id,
-                chat.friendUserEntity.id
+                chat.friendUserEntity.id,
+                chat.friendUserEntity
             )
             router.navigateToMessages(parameters)
         }

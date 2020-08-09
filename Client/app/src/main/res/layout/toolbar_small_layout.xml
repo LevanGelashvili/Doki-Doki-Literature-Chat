@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/expanded_toolbar_constraint"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/toolbar_color"
     android:layout_height="@dimen/small_toolbar_size">
 
     <TextView
@@ -70,6 +70,6 @@
         android:layout_gravity="top|center_horizontal"
 
         android:src="@drawable/message_circle"
-        app:border_color="@android:color/white"
-        app:border_width="5dp"/>
+        app:civ_border_width="@dimen/border_width"
+        app:civ_border_color="@color/border_color"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

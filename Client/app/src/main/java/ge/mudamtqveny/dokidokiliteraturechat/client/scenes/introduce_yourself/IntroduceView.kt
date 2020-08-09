@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Base64
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.bitmapToBase64
-import java.io.ByteArrayOutputStream
 
 
 interface IntroduceViewing {
@@ -34,6 +33,8 @@ class IntroduceView : Fragment(), IntroduceViewing {
     private lateinit var jobTextField: EditText
     private lateinit var startButton: Button
     private lateinit var image: ImageView
+
+    private var bitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,8 @@ class IntroduceView : Fragment(), IntroduceViewing {
         if (nickname.isEmpty() || job.isEmpty()) {
             Toast.makeText(this.context, "Fill both parameters and try again", Toast.LENGTH_LONG).show()
         } else {
-            val viewModel = IntroduceUserViewModel(nickname, job, bitmapToBase64(image.drawToBitmap()))
+            if (bitmap == null) bitmap = image.drawToBitmap()
+            val viewModel = IntroduceUserViewModel(nickname, job, bitmapToBase64(bitmap!!))
             presenter.verifyUser(viewModel)
         }
     }
@@ -99,6 +101,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, data?.data);
             Toast.makeText(this.context, "Image chosen successfully!", Toast.LENGTH_LONG).show()
         }
     }

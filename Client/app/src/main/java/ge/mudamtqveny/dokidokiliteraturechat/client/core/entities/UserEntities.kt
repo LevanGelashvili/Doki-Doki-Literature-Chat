@@ -1,6 +1,8 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.entities
 
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.ToolbarUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.base64ToBitmap
 import java.io.Serializable
 
 data class UserEntity (
@@ -8,7 +10,12 @@ data class UserEntity (
     val name: String,
     val job: String,
     val picture: String
-)
+): Serializable {
+
+    fun toToolbarViewModel(): ToolbarUserViewModel {
+        return ToolbarUserViewModel(name, job, base64ToBitmap(picture))
+    }
+}
 
 data class UserIdEntity (
     val id: Long
