@@ -16,7 +16,9 @@ interface ChatCreatingUseCase {
     fun createChat(chatInsertEntity: ChatInsertEntity, completionHandler: (ChatIdEntity) -> Unit)
 }
 
-class ChatsUseCase(private val gateway: ChatGateway): ChatListingUseCase, ChatDeletingUseCase, ChatCreatingUseCase {
+interface RestfulChatUseCase: ChatListingUseCase, ChatDeletingUseCase, ChatCreatingUseCase
+
+class ChatsUseCase(private val gateway: ChatGateway): RestfulChatUseCase {
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
         gateway.fetchChatList(userIdEntity, completionHandler)

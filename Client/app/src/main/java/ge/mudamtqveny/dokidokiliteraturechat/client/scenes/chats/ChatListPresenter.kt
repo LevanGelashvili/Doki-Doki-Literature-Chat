@@ -1,10 +1,9 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats
 
-import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserSearchEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.ChatListingUseCase
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.RestfulChatUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListingUseCase
 
 interface ChatListPresenting {
     fun handleOnCreate()
@@ -14,8 +13,8 @@ class ChatListPresenter (
 
     private val view: ChatListViewing,
     private val parameters: ChatListParameters,
-    private val chatListUseCase: ChatListingUseCase,
-    private val userListUseCase: UserListUseCase,
+    private val chatUseCase: RestfulChatUseCase,
+    private val userListUseCase: UserListingUseCase,
     private val router: ChatListRouting
 
 ): ChatListPresenting {
@@ -26,15 +25,15 @@ class ChatListPresenter (
     }
 
     private fun fetchChatList() {
-        chatListUseCase.fetchChatList(parameters.userIdEntity) {
-            Log.d("butter_knife", "Chat List: $it")
+        chatUseCase.fetchChatList(parameters.userIdEntity) {
+
         }
     }
 
     private fun fetchUsers(word: String) {
         if (word.length > 3) {
             userListUseCase.fetchUsersSatisfying(UserSearchEntity(word)) {
-                Log.d("butter_knife", "User List: $it")
+
             }
         }
     }

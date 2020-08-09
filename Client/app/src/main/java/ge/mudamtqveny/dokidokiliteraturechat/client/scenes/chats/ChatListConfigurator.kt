@@ -10,10 +10,10 @@ class ChatListConfigurator(private val view: ChatListView) {
     fun configure() {
         val parameters = view.requireArguments().get("parameters") as ChatListParameters
         val gateway = ServerGateway()
-        val chatListUseCase = ChatsUseCase(gateway)
-        val userListUseCase = UserUseCase(gateway)
+        val chatUseCase = ChatsUseCase(gateway)
+        val userUseCase = UserUseCase(gateway)
         val router = ChatListRouter(view)
-        val presenter = ChatListPresenter(view, parameters, chatListUseCase, userListUseCase, router)
+        val presenter = ChatListPresenter(view, parameters, chatUseCase, userUseCase, router)
         view.presenter = presenter
     }
 }
