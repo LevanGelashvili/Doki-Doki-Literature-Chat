@@ -1,6 +1,7 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
+import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.*

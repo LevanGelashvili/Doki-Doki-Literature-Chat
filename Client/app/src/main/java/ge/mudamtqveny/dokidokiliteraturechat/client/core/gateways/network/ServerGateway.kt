@@ -1,6 +1,7 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network
 
+import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network.callbacks.DefaultCallback
@@ -79,6 +80,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     /** MessageGateway part */
 
     override fun sendMessage(messageEntity: MessageEntity) {
+        Log.d("Here", messageEntity.toString())
         client.sendMessage(messageEntity)
     }
 

@@ -1,6 +1,5 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
-import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessageEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessagePresentingEntity
@@ -8,7 +7,6 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.ServiceTimer
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageSendingUseCase
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessagesUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UnseenMessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
 
@@ -53,7 +51,6 @@ class MessagesPresenter(
     }
 
     override fun sendMessage(messageViewModel: MessageViewModel) {
-        Log.d("butter knife", "Sending message from presenter")
         messageSendingUseCase.sendMessage(MessageEntity(parameters, messageViewModel))
     }
 
@@ -75,6 +72,6 @@ class MessagesPresenter(
     }
 
     override fun timerExpired() {
-        Log.d("butter knife", "timer arrived")
+
     }
 }

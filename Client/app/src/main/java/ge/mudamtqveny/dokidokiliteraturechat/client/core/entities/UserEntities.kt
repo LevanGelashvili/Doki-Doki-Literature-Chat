@@ -1,6 +1,8 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.entities
 
+import java.io.Serializable
+
 data class UserEntity (
     val id: Long,
     val name: String,
@@ -10,7 +12,7 @@ data class UserEntity (
 
 data class UserIdEntity (
     val id: Long
-)
+): Serializable
 
 data class UserLoginEntity (
     val name: String,
