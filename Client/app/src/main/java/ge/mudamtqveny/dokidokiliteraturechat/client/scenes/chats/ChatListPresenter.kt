@@ -1,13 +1,7 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats
 
-import android.graphics.BitmapFactory
-import android.util.Base64
-import android.util.Log
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatInsertEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatPresentingEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserSearchEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.RestfulChatUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatViewModel
@@ -33,7 +27,7 @@ class ChatListPresenter (
 
 ): ChatListPresenting {
 
-    private var existingChats: List<ChatPresentingEntity> = emptyList()
+    private var existingChats: MutableList<ChatPresentingEntity> = mutableListOf()
         set(value) {
             field = value
             view.handleChatListChanged()
@@ -64,12 +58,12 @@ class ChatListPresenter (
     }
 
     private fun fetchChatList() {
-        chatUseCase.fetchChatList(parameters.userIdEntity) { existingChats = it }
+        chatUseCase.fetchChatList(parameters.userIdEntity) { existingChats = it.toMutableList() }
     }
 
     override fun handleAfterTextChanged(text: String) {
         if (text.length > 3) fetchUserList(text)
-        else filteredUsers = emptyList()
+        else if (filteredUsers.isNotEmpty()) filteredUsers = emptyList()
     }
 
     private fun fetchUserList(word: String) {
@@ -78,37 +72,46 @@ class ChatListPresenter (
 
     override fun handleChatCellClickedAt(position: Int) {
 
-        val chatPresentingEntity = displayingChats[position]
+        val chat = displayingChats[position]
 
-        if (chatPresentingEntity.chatId == -1L) {
+        if (chat.chatId == -1L) {
 
             val chatInsertEntity = ChatInsertEntity (
                 parameters.userIdEntity.id,
-                chatPresentingEntity.friendUserEntity.id
+                chat.friendUserEntity.id
             )
 
             chatUseCase.createChat(chatInsertEntity) {
                 val parameters = MessagesParameters (
                     it.id,
                     parameters.userIdEntity.id,
-                    chatPresentingEntity.friendUserEntity.id
+                    chat.friendUserEntity.id
                 )
                 router.navigateToMessages(parameters)
             }
 
         } else {
+
             val parameters = MessagesParameters (
-                chatPresentingEntity.chatId,
+                chat.chatId,
                 parameters.userIdEntity.id,
-                chatPresentingEntity.friendUserEntity.id
+                chat.friendUserEntity.id
             )
             router.navigateToMessages(parameters)
         }
-
     }
 
-    override fun handleChatCellSwipedAt(position: Int) { // TODO
-        Log.d("butter_knife", "Swiped At: $position")
+    override fun handleChatCellSwipedAt(position: Int) {
+
+        val chat = displayingChats[position]
+
+        if (chat.chatId != -1L) {
+            chatUseCase.deleteChat(ChatDeleteEntity(chat.chatId, parameters.userIdEntity.id))
+            val index = existingChats.indexOfFirst { it.chatId == chat.chatId }
+            existingChats.removeAt(index)
+        }
+
+        view.handleChatListChanged()
     }
 
     override fun chatsCount(): Int {

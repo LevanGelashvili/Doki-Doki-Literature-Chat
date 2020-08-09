@@ -26,9 +26,13 @@ interface ChatDAO {
         "         GROUP BY chat_id) mm\n" +
         "    ON m.chat_id = mm.chat_id AND\n" +
         "       m.date = mm.max_date\n" +
+        "  JOIN (SELECT chat_id\n" +
+        "          FROM $CHAT_TABLE\n" +
+        "         WHERE user_id = :userId) c\n" +
+        "    ON m.chat_id = c.chat_id\n" +
         "  LEFT JOIN $USER_TABLE f\n" +
-        "    ON ((f.user_id = m.user_id_from AND m.user_id_to = :userId) OR\n" +
-        "        (f.user_id = m.user_id_to AND m.user_id_from = :userId))\n" +
+        "    ON (f.user_id = m.user_id_from AND m.user_id_to = :userId) OR\n" +
+        "       (f.user_id = m.user_id_to AND m.user_id_from = :userId)\n" +
         " WHERE m.user_id_from = :userId OR m.user_id_to = :userId"
     )
     suspend fun getUserChats(userId: Long): List<ChatPresentingDataEntity>

@@ -11,7 +11,7 @@ class DeleteChatHandler: HttpHandler {
 
     override fun handle(exchange: HttpExchange) {
         when (exchange.requestMethod) {
-            "DELETE" -> {
+            "POST" -> {
                 val chatDeleteEntity = exchangeToObject(exchange, ChatDeleteEntity::class.java)
                 LocalRoomDatabase.getInstance().deleteChat(chatDeleteEntity)
                 sendResponse(exchange, "")

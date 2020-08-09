@@ -68,7 +68,12 @@ class LocalRoomDatabase: DatabaseService {
         GlobalScope.launch(Dispatchers.IO) {
 
             val dao = database.getChatDAO()
+
+            val yle1 = dao.numberOfChatEntriesLeft(chatDeleteEntity.chatId)
             dao.deleteChat(chatDeleteEntity.chatId, chatDeleteEntity.deleterUserId)
+            val yle2 = dao.numberOfChatEntriesLeft(chatDeleteEntity.chatId)
+
+            error("YLEEBI: $yle1 $yle2")
 
             if (dao.numberOfChatEntriesLeft(chatDeleteEntity.chatId) == 0) {
                 dao.deleteChatlessMessages(chatDeleteEntity.chatId)
