@@ -1,6 +1,9 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
 import android.util.Log
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatIdEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessageEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessagePresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.ServiceTimer
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
@@ -11,7 +14,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.M
 
 interface MessagesPresenting {
     fun goBackToChats()
-    fun sendMessage()
+    fun sendMessage(messageViewModel: MessageViewModel)
 
     fun isUserMessageAt(position: Int): Boolean
     fun viewModelAt(position: Int): MessageViewModel
@@ -35,29 +38,36 @@ class MessagesPresenter(
         startService()
     }
 
+    private var messages: List<MessagePresentingEntity> = listOf()
+
+    override fun fetchMessages() {
+        val chatIdEntity = ChatIdEntity(parameters.chatId)
+        messageListingUseCase.getMessages(chatIdEntity) {
+            messages = it
+            view.messageListUpdated()
+        }
+    }
+
+    override fun sendMessage(messageViewModel: MessageViewModel) {
+
+        messageSendingUseCase.sendMessage(MessageEntity(parameters, messageViewModel))
+    }
+
     override fun goBackToChats() {
         timer.stopService()
         router.navigateToChatList()
     }
 
-    override fun fetchMessages() {
-        TODO("Not yet implemented")
-    }
-
-    override fun sendMessage() {
-        TODO("Not yet implemented")
-    }
-
     override fun isUserMessageAt(position: Int): Boolean {
-        return true
+        return parameters.initUserId == messages[position].userIdFrom
     }
 
     override fun viewModelAt(position: Int): MessageViewModel {
-        TODO("Not yet implemented")
+        return messages[position].toMessageViewModel()
     }
 
     override fun messageCount(): Int {
-        TODO("Not yet implemented")
+        return messages.size
     }
 
     override fun timerExpired() {
