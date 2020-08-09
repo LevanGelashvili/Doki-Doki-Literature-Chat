@@ -36,7 +36,7 @@ interface ChatDAO {
     @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId")
     suspend fun getMessagesFromChat(chatId: Long): List<MessagePresentingDataEntity>
 
-    @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId and :date > date")
+    @Query("select user_id_from, user_id_to, text, date from $MESSAGE_TABLE where chat_id == :chatId and :date <= date")
     suspend fun getUnseenMessages(date: Long, chatId: Long): List<MessagePresentingDataEntity>
 
     @Insert(entity = ChatDataEntity::class, onConflict = OnConflictStrategy.IGNORE)

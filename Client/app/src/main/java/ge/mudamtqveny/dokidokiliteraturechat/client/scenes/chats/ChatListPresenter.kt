@@ -12,6 +12,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.RestfulChatUse
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesParameters
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.base64ToBitmap
 
 interface ChatListPresenting {
     fun handleOnCreate()
@@ -116,10 +117,9 @@ class ChatListPresenter (
 
     override fun chatViewModelAt(position: Int): ChatViewModel {
         val chat = displayingChats[position]
-        val decodedString = Base64.decode(chat.friendUserEntity.picture, Base64.DEFAULT)
-        val friendAvatar  = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+
         return ChatViewModel (
-            friendAvatar,
+            base64ToBitmap(chat.friendUserEntity.picture),
             chat.friendUserEntity.name,
             chat.lastMessage,
             chat.lastMessageDate

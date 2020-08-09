@@ -17,6 +17,7 @@ import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.bitmapToBase64
 import java.io.ByteArrayOutputStream
 
 
@@ -62,19 +63,9 @@ class IntroduceView : Fragment(), IntroduceViewing {
         if (nickname.isEmpty() || job.isEmpty()) {
             Toast.makeText(this.context, "Fill both parameters and try again", Toast.LENGTH_LONG).show()
         } else {
-            presenter.verifyUser(IntroduceUserViewModel(nickname, job, encodePicture()))
+            val viewModel = IntroduceUserViewModel(nickname, job, bitmapToBase64(image.drawToBitmap()))
+            presenter.verifyUser(viewModel)
         }
-    }
-
-    /**
-     * Encodes picture to a base64 string
-     */
-    private fun encodePicture(): String {
-        val outputStream = ByteArrayOutputStream()
-        image.drawToBitmap().apply {
-            compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-        }
-        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
     }
 
     override fun chooseImage() {
