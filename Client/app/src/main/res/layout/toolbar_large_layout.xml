@@ -1,0 +1,67 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expanded_toolbar_constraint"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/expanded_toolbar_size">
+
+    <TextView
+        android:id="@+id/expanded_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="@dimen/expanded_horizontal_padding"
+        android:textColor="@android:color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="Name"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/expanded_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@android:color/white"
+        android:text="Manager"
+
+        android:layout_marginTop="@dimen/expanded_vertical_padding"
+
+        app:layout_constraintTop_toBottomOf="@id/expanded_name"
+        app:layout_constraintStart_toStartOf="@id/expanded_name">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/expanded_back_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/chevron_left"
+
+
+        android:layout_marginBottom="@dimen/expanded_vertical_padding"
+
+        app:layout_constraintBottom_toTopOf="@+id/expanded_name"
+        app:layout_constraintStart_toStartOf="@id/expanded_name">
+    </ImageView>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/expanded_circle_image"
+        android:layout_width="@dimen/image_width"
+        android:layout_height="@dimen/image_width"
+
+        app:layout_constraintTop_toTopOf="@id/expanded_name"
+        app:layout_constraintBottom_toBottomOf="@id/expanded_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="@dimen/expanded_horizontal_padding"
+
+        android:layout_gravity="top|center_horizontal"
+
+        android:src="@drawable/message_circle"
+        app:border_color="@android:color/white"
+        app:border_width="5dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

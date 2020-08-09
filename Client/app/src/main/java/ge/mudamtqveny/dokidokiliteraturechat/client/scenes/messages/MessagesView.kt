@@ -3,11 +3,11 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.MessageAdapter
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
+
 
 interface MessagesViewing {
     fun goBack()
@@ -36,6 +37,7 @@ class MessagesView: Fragment(), MessagesViewing {
         super.onCreate(savedInstanceState)
         MessagesConfigurator(this).configure()
         messageAdapter = MessageAdapter(presenter)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

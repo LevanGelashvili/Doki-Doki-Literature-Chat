@@ -54,6 +54,7 @@ class MessagesPresenter(
     override fun sendMessage(messageViewModel: MessageViewModel) {
         val messageEntity = MessageEntity(parameters, messageViewModel)
         messages.add(MessagePresentingEntity(messageEntity))
+        view.displayNewlyTypedMessage()
         messageSendingUseCase.sendMessage(MessageEntity(parameters, messageViewModel))
     }
 
