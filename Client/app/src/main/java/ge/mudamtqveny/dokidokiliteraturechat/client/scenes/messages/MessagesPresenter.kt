@@ -3,6 +3,10 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.ServiceTimer
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.TimerObserver
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageSendingUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessagesUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UnseenMessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
 
 interface MessagesPresenting {
@@ -11,19 +15,33 @@ interface MessagesPresenting {
 
     fun isUserMessageAt(position: Int): Boolean
     fun viewModelAt(position: Int): MessageViewModel
+
+    fun fetchMessages()
     fun messageCount(): Int
 }
 
+class MessagesPresenter(
 
-class MessagesPresenter(private val router: MessagesRouting): MessagesPresenting, TimerObserver {
+    private val view: MessagesViewing,
+    private val parameters: MessagesParameters,
+    private val router: MessagesRouting,
+    private val messageSendingUseCase: MessageSendingUseCase,
+    private val messageListingUseCase: MessageListingUseCase,
+    private val unseenMessageListingUseCase: UnseenMessageListingUseCase
+
+) : MessagesPresenting, TimerObserver {
 
     private var timer = ServiceTimer(this, 2000).apply {
         startService()
-        // TODO: StopService in navigate
     }
 
     override fun goBackToChats() {
+        timer.stopService()
         router.navigateToChatList()
+    }
+
+    override fun fetchMessages() {
+        TODO("Not yet implemented")
     }
 
     override fun sendMessage() {
@@ -31,7 +49,7 @@ class MessagesPresenter(private val router: MessagesRouting): MessagesPresenting
     }
 
     override fun isUserMessageAt(position: Int): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun viewModelAt(position: Int): MessageViewModel {
