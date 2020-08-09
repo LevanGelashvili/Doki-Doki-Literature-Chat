@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ class MessagesView: Fragment(), MessagesViewing {
     private lateinit var messageEditText: EditText
     private lateinit var messageAdapter: MessageAdapter
 
+    private lateinit var sendButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MessagesConfigurator(this).configure()
@@ -38,6 +41,11 @@ class MessagesView: Fragment(), MessagesViewing {
 
         initEditText(view)
         initRecycler(view)
+
+        sendButton = view.findViewById(R.id.send_button)
+        sendButton.setOnClickListener {
+            messageTyped()
+        }
 
         return view
     }
@@ -67,7 +75,7 @@ class MessagesView: Fragment(), MessagesViewing {
     private fun initEditText(view: View) {
         messageEditText = view.findViewById(R.id.message_editText)
 
-        messageEditText.setOnTouchListener { _: View, event: MotionEvent ->
+        /*messageEditText.setOnTouchListener { _: View, event: MotionEvent ->
             val rightDrawable = 2
             if(event.action == MotionEvent.ACTION_UP) {
                 if(event.rawX >= (messageEditText.right - messageEditText.compoundDrawables[rightDrawable].bounds.width())) {
@@ -76,6 +84,6 @@ class MessagesView: Fragment(), MessagesViewing {
                 }
             }
             false;
-        }
+        }*/
     }
 }

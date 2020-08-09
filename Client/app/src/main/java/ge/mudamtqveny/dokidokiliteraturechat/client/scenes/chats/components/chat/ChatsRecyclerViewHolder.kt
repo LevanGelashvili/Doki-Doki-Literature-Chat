@@ -18,6 +18,6 @@ class ChatsRecyclerViewHolder(chatView: View): RecyclerView.ViewHolder(chatView)
         avatarImageView.setImageBitmap(chatViewModel.friendAvatar)
         nameTextView.text = chatViewModel.friendName
         lastMessageTextView.text = chatViewModel.lastMessage
-        lastMessageDateTextView.text = chatViewModel.lastMessage.toString() // FIXME: Format
+        lastMessageDateTextView.text = chatViewModel.lastMessageDate.toString() // FIXME: Format
     }
 }
