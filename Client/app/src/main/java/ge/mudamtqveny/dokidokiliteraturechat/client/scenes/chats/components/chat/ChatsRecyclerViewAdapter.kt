@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.ChatListPresenting
 
 class ChatsRecyclerViewAdapter (
 
-    private val chats: List<ChatViewModel>
+    private val presenter: ChatListPresenting
 
 ): RecyclerView.Adapter<ChatsRecyclerViewHolder>() {
 
@@ -18,10 +19,10 @@ class ChatsRecyclerViewAdapter (
     }
 
     override fun getItemCount(): Int {
-        return chats.size
+        return presenter.chatsCount()
     }
 
     override fun onBindViewHolder(holder: ChatsRecyclerViewHolder, position: Int) {
-        holder.configure(chats[position])
+        holder.configure(presenter.chatViewModelAt(position))
     }
 }

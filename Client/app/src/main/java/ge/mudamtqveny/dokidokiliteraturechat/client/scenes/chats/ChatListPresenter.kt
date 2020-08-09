@@ -1,12 +1,18 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats
 
+import android.graphics.BitmapFactory
+import android.util.Base64
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatPresentingEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserSearchEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.RestfulChatUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListingUseCase
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatViewModel
 
 interface ChatListPresenting {
     fun handleOnCreate()
+    fun chatsCount(): Int
+    fun chatViewModelAt(position: Int): ChatViewModel
 }
 
 class ChatListPresenter (
@@ -19,22 +25,29 @@ class ChatListPresenter (
 
 ): ChatListPresenting {
 
+    private var chats: List<ChatPresentingEntity> = listOf()
+
     override fun handleOnCreate() {
         fetchChatList()
-        fetchUsers("word")
+    }
+
+    override fun chatsCount(): Int {
+        return chats.size
+    }
+
+    override fun chatViewModelAt(position: Int): ChatViewModel {
+        val chat = chats[position]
+        val decodedString = Base64.decode(chat.friendUserEntity.picture, Base64.DEFAULT)
+        val friendAvatar  = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+        return ChatViewModel (
+            friendAvatar,
+            chat.friendUserEntity.name,
+            chat.lastMessage,
+            chat.lastMessageDate
+        )
     }
 
     private fun fetchChatList() {
-        chatUseCase.fetchChatList(parameters.userIdEntity) {
-
-        }
-    }
-
-    private fun fetchUsers(word: String) {
-        if (word.length > 3) {
-            userListUseCase.fetchUsersSatisfying(UserSearchEntity(word)) {
-
-            }
-        }
+        chatUseCase.fetchChatList(parameters.userIdEntity) { chats = it }
     }
 }

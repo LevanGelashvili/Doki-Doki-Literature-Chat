@@ -9,6 +9,3 @@ data class ChatViewModel (
     val lastMessage: String,
     val lastMessageDate: Long
 )
-
-//  val decodedString = Base64.decode(friendAvatar, Base64.DEFAULT)
-//  val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)

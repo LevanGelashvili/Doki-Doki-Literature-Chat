@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatsRecyclerViewAdapter
 
 interface ChatListViewing {
 
@@ -34,6 +36,9 @@ class ChatListView: Fragment(), ChatListViewing {
 
         searchEditText = view.findViewById(R.id.searchEditTextText)
         chatsRecyclerView = view.findViewById(R.id.chatsRecyclerView)
+
+        chatsRecyclerView.layoutManager = LinearLayoutManager(context)
+        chatsRecyclerView.adapter = ChatsRecyclerViewAdapter(presenter)
 
         return view
     }
