@@ -14,6 +14,7 @@ interface ChatListPresenting {
     fun handleOnCreate()
     fun handleAfterTextChanged(text: String)
     fun handleChatCellClickedAt(position: Int)
+    fun handleChatCellSwipedAt(position: Int)
     fun chatsCount(): Int
     fun chatViewModelAt(position: Int): ChatViewModel
 }
@@ -40,7 +41,11 @@ class ChatListPresenter (
     }
 
     override fun handleChatCellClickedAt(position: Int) {
-        Log.d("butter_knife", "Clicked ar: $position")
+        Log.d("butter_knife", "Clicked At: $position")
+    }
+
+    override fun handleChatCellSwipedAt(position: Int) {
+        Log.d("butter_knife", "Swiped At: $position")
     }
 
     override fun chatsCount(): Int {
