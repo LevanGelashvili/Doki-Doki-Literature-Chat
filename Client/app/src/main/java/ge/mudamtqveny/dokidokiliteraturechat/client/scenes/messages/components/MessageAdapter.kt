@@ -28,4 +28,8 @@ class MessageAdapter(private val presenter: MessagesPresenting): RecyclerView.Ad
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         holder.configure(presenter.viewModelAt(position))
     }
+
+    fun requestNewlyTypedMessage() {
+        notifyItemChanged(itemCount)
+    }
 }

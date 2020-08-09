@@ -2,6 +2,8 @@
 <resources>
 
     <!--Messages Scene-->
+    <dimen name="divider_size">28dp</dimen>
+
     <dimen name="message_bubble_corner">35dp</dimen>
     <dimen name="message_bubble_margin">30dp</dimen>
     <dimen name="message_bubble_padding">20dp</dimen>

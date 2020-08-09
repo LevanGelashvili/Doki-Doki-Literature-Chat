@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
@@ -18,6 +20,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.M
 interface MessagesViewing {
     fun goBack()
     fun messageTyped()
+    fun displayNewlyTypedMessage()
     fun messageListUpdated()
 }
 
@@ -59,15 +62,24 @@ class MessagesView: Fragment(), MessagesViewing {
         presenter.sendMessage(viewModel)
     }
 
+    override fun displayNewlyTypedMessage() {
+        messageAdapter.requestNewlyTypedMessage()
+    }
+
     override fun messageListUpdated() {
         messageAdapter.notifyDataSetChanged()
     }
 
     private fun initRecycler(view: View) {
         val messageRecycler: RecyclerView = view.findViewById(R.id.message_recyclerview)
+        val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.transparent_divider)!!)
+        }
+
         messageRecycler.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = messageAdapter
+            addItemDecoration(divider)
         }
     }
 

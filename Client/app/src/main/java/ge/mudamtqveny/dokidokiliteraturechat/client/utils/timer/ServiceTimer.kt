@@ -1,4 +1,4 @@
-package ge.mudamtqveny.dokidokiliteraturechat.client.core.timer
+package ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer
 
 import kotlinx.coroutines.*
 

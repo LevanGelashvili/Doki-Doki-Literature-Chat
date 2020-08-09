@@ -1,12 +1,10 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
-import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessageEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessagePresentingEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UnseenMessageEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.ServiceTimer
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.timer.TimerObserver
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageSendingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UnseenMessageListingUseCase
@@ -45,17 +43,17 @@ class MessagesPresenter(
     private var messages: MutableList<MessagePresentingEntity> = mutableListOf()
 
     override fun fetchMessages() {
-        Log.d("Here", parameters.toString())
         val chatIdEntity = ChatIdEntity(parameters.chatId)
         messageListingUseCase.getMessages(chatIdEntity) {
             messages.clear()
             messages.addAll(it)
-            Log.d("Here", messages.toString())
             view.messageListUpdated()
         }
     }
 
     override fun sendMessage(messageViewModel: MessageViewModel) {
+        val messageEntity = MessageEntity(parameters, messageViewModel)
+        messages.add(MessagePresentingEntity(messageEntity))
         messageSendingUseCase.sendMessage(MessageEntity(parameters, messageViewModel))
     }
 

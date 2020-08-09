@@ -52,6 +52,12 @@ data class MessagePresentingEntity (
     val text: String,
     val date: Long
 ) {
+    constructor(messageEntity: MessageEntity) : this(
+        userIdFrom = messageEntity.userIdFrom,
+        userIdTo = messageEntity.userIdTo,
+        text = messageEntity.text,
+        date = messageEntity.date
+    )
 
     fun toMessageViewModel(): MessageViewModel {
         return MessageViewModel(text, date)
