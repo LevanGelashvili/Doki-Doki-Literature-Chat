@@ -111,7 +111,7 @@ class LocalRoomDatabase: DatabaseService {
 
     override fun fetchUnseenMessageList(unseenMessageEntity: UnseenMessageEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
-            val chatDataMessages = database.getChatDAO().getUnseenMessages(unseenMessageEntity.idToFetchFrom, unseenMessageEntity.chatId)
+            val chatDataMessages = database.getChatDAO().getUnseenMessages(unseenMessageEntity.lastDate, unseenMessageEntity.chatId)
             val chatMessages = chatDataMessages.map {
                 MessagePresentingEntity(it.userIdFrom, it.userIdTo, it.text, it.date)
             }

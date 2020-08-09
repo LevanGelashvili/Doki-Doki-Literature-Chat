@@ -37,6 +37,7 @@ data class MessageDataEntity (
     @ColumnInfo(name = "date")
     var date: Long
 ) {
+
     constructor(message: MessageEntity): this (
         userIDFrom = message.userIdFrom,
         userIDTo = message.userIdTo,
@@ -47,9 +48,6 @@ data class MessageDataEntity (
 }
 
 data class MessagePresentingDataEntity (
-
-    @ColumnInfo(name = "message_id")
-    var messageId: Long,
 
     @ColumnInfo(name = "user_id_from")
     val userIdFrom: Long,

@@ -2,6 +2,7 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -23,8 +24,9 @@ interface MessagesViewing {
 class MessagesView: Fragment(), MessagesViewing {
 
     lateinit var presenter: MessagesPresenting
-    lateinit var messageEditText: EditText
-    lateinit var adapter: MessageAdapter
+
+    private lateinit var messageEditText: EditText
+    private lateinit var adapter: MessageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

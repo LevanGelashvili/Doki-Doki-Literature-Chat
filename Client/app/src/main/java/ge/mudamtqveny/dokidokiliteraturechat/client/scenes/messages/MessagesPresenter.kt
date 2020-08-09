@@ -49,7 +49,7 @@ class MessagesPresenter(
     }
 
     override fun sendMessage(messageViewModel: MessageViewModel) {
-
+        Log.d("butter knife", "Sending message from presenter")
         messageSendingUseCase.sendMessage(MessageEntity(parameters, messageViewModel))
     }
 
@@ -71,6 +71,6 @@ class MessagesPresenter(
     }
 
     override fun timerExpired() {
-        Log.d("Here", "timer arrived")
+        Log.d("butter knife", "timer arrived")
     }
 }

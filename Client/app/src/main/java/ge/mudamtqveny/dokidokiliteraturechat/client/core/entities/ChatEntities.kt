@@ -47,7 +47,6 @@ data class MessageEntity (
 }
 
 data class MessagePresentingEntity (
-    val messageId: Long,
     val userIdFrom: Long,
     val userIdTo: Long,
     val text: String,
