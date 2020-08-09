@@ -24,5 +24,8 @@ class ChatsRecyclerViewAdapter (
 
     override fun onBindViewHolder(holder: ChatsRecyclerViewHolder, position: Int) {
         holder.configure(presenter.chatViewModelAt(position))
+        holder.itemView.setOnClickListener {
+            presenter.handleChatCellClickedAt(position)
+        }
     }
 }
