@@ -1,7 +1,9 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -10,17 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.MessageAdapter
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
 
 interface MessagesViewing {
     fun goBack()
     fun messageTyped()
+    fun messageListUpdated()
 }
 
 class MessagesView: Fragment(), MessagesViewing {
 
     lateinit var presenter: MessagesPresenting
     lateinit var messageEditText: EditText
-    lateinit var messageRecycler: RecyclerView
+    lateinit var adapter: MessageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +35,10 @@ class MessagesView: Fragment(), MessagesViewing {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.messages_fragment, container, false)
 
-        messageEditText = view.findViewById(R.id.message_editText)
-        // TODO: DRAWABLE LISTENER
-
+        initEditText(view)
         initRecycler(view)
 
         return view
-    }
-
-    private fun initRecycler(view: View) {
-        messageRecycler = view.findViewById(R.id.message_recyclerview)
-        messageRecycler.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = MessageAdapter(presenter)
-        }
     }
 
     override fun goBack() {
@@ -52,6 +46,35 @@ class MessagesView: Fragment(), MessagesViewing {
     }
 
     override fun messageTyped() {
-        presenter.sendMessage()
+        val viewModel = MessageViewModel(messageEditText.text.toString(), System.currentTimeMillis())
+        presenter.sendMessage(viewModel)
+    }
+
+    override fun messageListUpdated() {
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun initRecycler(view: View) {
+        val messageRecycler: RecyclerView = view.findViewById(R.id.message_recyclerview)
+        messageRecycler.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = MessageAdapter(presenter)
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initEditText(view: View) {
+        messageEditText = view.findViewById(R.id.message_editText)
+
+        messageEditText.setOnTouchListener { _: View, event: MotionEvent ->
+            val rightDrawable = 2
+            if(event.action == MotionEvent.ACTION_UP) {
+                if(event.rawX >= (messageEditText.right - messageEditText.compoundDrawables[rightDrawable].bounds.width())) {
+                    messageTyped()
+                    true;
+                }
+            }
+            false;
+        }
     }
 }

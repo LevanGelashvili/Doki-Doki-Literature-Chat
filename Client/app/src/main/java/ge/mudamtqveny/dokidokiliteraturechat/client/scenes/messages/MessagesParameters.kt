@@ -5,6 +5,7 @@ import java.io.Serializable
 data class MessagesParameters (
 
     val chatId: Long,
-    val userId: Long
+    val initUserId: Long,
+    val otherUserId: Long
 
 ): Serializable
