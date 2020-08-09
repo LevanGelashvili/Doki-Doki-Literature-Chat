@@ -6,10 +6,11 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessagesUseCas
 class MessagesConfigurator(private val view: MessagesView) {
 
     fun configure() {
+        val parameters = view.requireArguments().get("parameters") as MessagesParameters
         val gateway = ServerGateway()
         val messageUseCase = MessagesUseCase(gateway)
         val router = MessagesRouter(view)
-        val presenter = MessagesPresenter(router)
+        val presenter = MessagesPresenter(view, parameters, router, messageUseCase, messageUseCase, messageUseCase)
         view.presenter = presenter
     }
 }
