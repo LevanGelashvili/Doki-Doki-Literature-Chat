@@ -1,5 +1,6 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
+import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessageEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessagePresentingEntity
