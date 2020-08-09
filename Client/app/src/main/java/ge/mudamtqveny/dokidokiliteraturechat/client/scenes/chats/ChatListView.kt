@@ -19,6 +19,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat
 
 interface ChatListViewing {
     fun handleChatListChanged()
+    val searchText: String
 }
 
 class ChatListView: Fragment(), ChatListViewing {
@@ -43,7 +44,7 @@ class ChatListView: Fragment(), ChatListViewing {
         searchEditText.addTextChangedListener(object: TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                presenter.handleAfterTextChanged(searchEditText.text.toString())
+                presenter.handleAfterTextChanged(searchText)
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
@@ -69,4 +70,7 @@ class ChatListView: Fragment(), ChatListViewing {
     override fun handleChatListChanged() {
         chatsRecyclerView.adapter?.notifyDataSetChanged()
     }
+
+    override val searchText: String
+        get() = searchEditText.text.toString()
 }
