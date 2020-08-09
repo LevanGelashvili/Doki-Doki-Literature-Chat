@@ -2,7 +2,6 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -24,13 +23,13 @@ interface MessagesViewing {
 class MessagesView: Fragment(), MessagesViewing {
 
     lateinit var presenter: MessagesPresenting
-
     private lateinit var messageEditText: EditText
-    private lateinit var adapter: MessageAdapter
+    private lateinit var messageAdapter: MessageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MessagesConfigurator(this).configure()
+        messageAdapter = MessageAdapter(presenter)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,14 +52,14 @@ class MessagesView: Fragment(), MessagesViewing {
     }
 
     override fun messageListUpdated() {
-        adapter.notifyDataSetChanged()
+        messageAdapter.notifyDataSetChanged()
     }
 
     private fun initRecycler(view: View) {
         val messageRecycler: RecyclerView = view.findViewById(R.id.message_recyclerview)
         messageRecycler.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = MessageAdapter(presenter)
+            adapter = messageAdapter
         }
     }
 

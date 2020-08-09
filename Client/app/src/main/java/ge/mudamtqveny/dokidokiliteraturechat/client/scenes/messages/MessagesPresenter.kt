@@ -34,6 +34,10 @@ class MessagesPresenter(
 
 ) : MessagesPresenting, TimerObserver {
 
+    init {
+        fetchMessages()
+    }
+
     private var timer = ServiceTimer(this, 2000).apply {
         startService()
     }
