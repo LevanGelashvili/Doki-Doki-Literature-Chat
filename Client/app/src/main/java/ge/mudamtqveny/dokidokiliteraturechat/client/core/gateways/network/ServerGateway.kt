@@ -5,6 +5,7 @@ import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network.callbacks.DefaultCallback
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.gateways.network.callbacks.VoidCallback
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -66,7 +67,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     /** ChatGateway part */
 
     override fun deleteChat(chatDeleteEntity: ChatDeleteEntity) {
-        client.deleteChat(chatDeleteEntity)
+        client.deleteChat(chatDeleteEntity).enqueue(VoidCallback())
     }
 
     override fun fetchChatList(userIdEntity: UserIdEntity, completionHandler: (List<ChatPresentingEntity>) -> Unit) {
@@ -80,8 +81,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     /** MessageGateway part */
 
     override fun sendMessage(messageEntity: MessageEntity) {
-        Log.d("Here", messageEntity.toString())
-        client.sendMessage(messageEntity)
+        client.sendMessage(messageEntity).enqueue(VoidCallback())
     }
 
     override fun getMessageList(chatIdEntity: ChatIdEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {

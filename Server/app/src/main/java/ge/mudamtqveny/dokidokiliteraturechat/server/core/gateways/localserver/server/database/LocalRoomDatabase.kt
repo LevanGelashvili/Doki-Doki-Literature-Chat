@@ -85,12 +85,12 @@ class LocalRoomDatabase: DatabaseService {
             val initChatData = ChatDataEntity(chatInsertEntity.initUserId, newChatId)
             val otherChatData = ChatDataEntity(chatInsertEntity.otherUserId, newChatId)
 
-            val initChatId = dao.insertChat(initChatData)
+            dao.insertChat(initChatData)
             dao.insertChat(otherChatData)
 
             insertMessage(placeHolderMessage(newChatId, chatInsertEntity.initUserId, chatInsertEntity.otherUserId))
 
-            completionHandler(ChatIdEntity(initChatId))
+            completionHandler(ChatIdEntity(newChatId))
         }
     }
 
