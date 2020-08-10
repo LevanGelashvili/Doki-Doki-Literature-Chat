@@ -14,5 +14,6 @@
 
     <!--Messages Scene-->
     <string name="message">Message</string>
+    <string name="search">Search</string>
 
 </resources>

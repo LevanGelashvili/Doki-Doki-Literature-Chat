@@ -1,0 +1,42 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expanded_toolbar_constraint"
+    android:background="@color/toolbar_color"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/chat_expanded_toolbar_size">
+
+    <TextView
+        android:id="@+id/chat_toolbar_large_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/message"
+        android:textColor="@android:color/white"
+        android:textSize="38dp"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toTopOf="@+id/searchEditTextText"
+        app:layout_constraintStart_toStartOf="@+id/searchEditTextText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/searchEditTextText"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+
+        android:layout_marginBottom="30dp"
+        android:autofillHints=""
+
+        android:drawableLeft="@drawable/message_circle"
+        android:drawablePadding="10dp"
+        android:background="@drawable/filter_edittext_rect"
+        android:hint="@string/search"
+        android:paddingLeft="25dp"
+
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

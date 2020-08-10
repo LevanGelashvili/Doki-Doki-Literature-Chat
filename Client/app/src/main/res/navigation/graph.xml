@@ -31,6 +31,9 @@
         <action
             android:id="@+id/actionChatListViewToMessagesView"
             app:destination="@id/messagesView" />
+        <action
+            android:id="@+id/actionChatListViewToIntroduceView"
+            app:destination="@id/introduceView" />
     </fragment>
     <fragment
         android:id="@+id/messagesView"

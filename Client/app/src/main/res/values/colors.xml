@@ -12,6 +12,8 @@
     <color name="message_rect_color">#F4F4F4</color>
     <color name="message_circle_color">#494A63</color>
 
+    <color name="filter_editText_color">#DEDEFD</color>
+
     <color name="toolbar_color">#5479F1</color>
     <color name="border_color">#63A2F6</color>
 </resources>

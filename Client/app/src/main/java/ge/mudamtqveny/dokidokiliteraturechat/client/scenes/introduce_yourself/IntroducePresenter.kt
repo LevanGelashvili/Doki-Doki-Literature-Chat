@@ -6,6 +6,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.vi
 
 interface IntroducePresenting {
     fun verifyUser(introduceUserViewModel: IntroduceUserViewModel)
+    fun exitApplication(exitAppFunction: () -> Unit)
 }
 
 class IntroducePresenter(private val router: IntroduceRouting, private val introducingUseCase: IntroducingUseCase): IntroducePresenting {
@@ -17,6 +18,10 @@ class IntroducePresenter(private val router: IntroduceRouting, private val intro
         introducingUseCase.verify(loginEntity) { userIdEntity ->
             userVerified(userIdEntity)
         }
+    }
+
+    override fun exitApplication(exitAppFunction: () -> Unit) {
+        router.exitApplication(exitAppFunction)
     }
 
     private fun userVerified(userId: UserIdEntity) {

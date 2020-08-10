@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
@@ -39,6 +40,14 @@ class IntroduceView : Fragment(), IntroduceViewing {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         IntroduceConfigurator(this).configure()
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                presenter.exitApplication {
+                    activity!!.finish()
+                }
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

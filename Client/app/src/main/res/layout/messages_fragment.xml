@@ -7,9 +7,9 @@
 
     <include
         android:id="@+id/include_large_toolbar"
-        layout="@layout/toolbar_large_layout"
+        layout="@layout/message_toolbar_large"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/expanded_toolbar_size"
         app:layout_collapseMode="parallax" />
 
     <androidx.core.widget.NestedScrollView

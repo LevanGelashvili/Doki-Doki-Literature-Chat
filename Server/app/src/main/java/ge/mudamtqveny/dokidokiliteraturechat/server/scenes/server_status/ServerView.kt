@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ge.mudamtqveny.dokidokiliteraturechat.server.R
 
@@ -34,7 +35,12 @@ class ServerView: AppCompatActivity(), ServerViewing {
         serverTogglerButton = findViewById(R.id.server_button)
 
         serverTogglerButton.setOnClickListener {
-            presenter.handleServerTogglerButtonClicked()
+
+            if (presenter.serverIsRunning()) {
+                Toast.makeText(context, "Please don't turn server off",  Toast.LENGTH_LONG).show()
+            } else {
+                presenter.handleServerTogglerButtonClicked()
+            }
         }
 
         presenter.handleViewDidLoad()
