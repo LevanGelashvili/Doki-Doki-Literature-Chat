@@ -2,6 +2,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos
 
 import androidx.room.*
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.CHAT_TABLE
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.MESSAGE_TABLE
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.USER_TABLE
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.UserDataEntity
@@ -31,11 +32,13 @@ interface UserDAO {
         "   FROM \n" +
         " (SELECT DISTINCT user_id_from\n" +
         "    FROM $MESSAGE_TABLE\n" +
-        "   WHERE user_id_to = :userId\n"+
+        "   WHERE user_id_to = :userId AND\n" +
+        "         chat_id IN (SELECT chat_id FROM $CHAT_TABLE WHERE user_id = :userId)\n"+
         "   UNION \n" +
         "  SELECT DISTINCT user_id_to\n" +
         "    FROM $MESSAGE_TABLE\n" +
-        "   WHERE user_id_from = :userId) t)"
+        "   WHERE user_id_from = :userId AND\n" +
+        "         chat_id IN (SELECT chat_id FROM $CHAT_TABLE WHERE user_id = :userId)) t)\n"
     )
     suspend fun getNonFriendUsersWithSubstringInName(userId: Long, substring: String): List<UserDataEntity>
 

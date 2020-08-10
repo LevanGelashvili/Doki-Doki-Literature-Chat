@@ -37,7 +37,7 @@ class MessagesPresenter(
         fetchMessages()
     }
 
-    private var timer = ServiceTimer(this, 3000).apply {
+    private var timer = ServiceTimer(this, 2000).apply {
         startService()
     }
 

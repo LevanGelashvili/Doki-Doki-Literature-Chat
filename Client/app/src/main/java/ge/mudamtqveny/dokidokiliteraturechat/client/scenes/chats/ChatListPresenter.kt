@@ -33,20 +33,20 @@ class ChatListPresenter (
     private val filterMinLength = 3
     private val nullChatId = 0L
 
-    private var timer = ServiceTimer(this, 3000).apply {
+    private var timer = ServiceTimer(this, 2000).apply {
         startService()
     }
 
     private var existingChats: MutableList<ChatPresentingEntity> = mutableListOf()
         set(value) {
             field = value
-            view.handleChatListChanged(true)
+            view.handleChatListChanged(displayingChats.isNotEmpty())
         }
 
     private var filteredUsers: MutableList<UserEntity> = mutableListOf()
         set(value) {
             field = value
-            view.handleChatListChanged(true)
+            view.handleChatListChanged(displayingChats.isNotEmpty())
         }
 
     private val displayingChats: List<ChatPresentingEntity>
@@ -110,6 +110,7 @@ class ChatListPresenter (
 
     override fun handleChatCellSwipedAt(position: Int) {
 
+        val displayingChats = displayingChats
         val chat = displayingChats[position]
 
         if (chat.chatId != nullChatId) {
@@ -119,10 +120,10 @@ class ChatListPresenter (
             if (view.searchText.length > filterMinLength && chat.friendUserEntity.name.contains(view.searchText))
                 filteredUsers.add(chat.friendUserEntity)
 
-            view.handleChatListChanged(true)
+            view.handleChatListChanged(displayingChats.isNotEmpty())
         }
         else {
-            view.handleChatListChanged(true)
+            view.handleChatListChanged(displayingChats.isNotEmpty())
             view.showMessage("You can't delete chat which does not exist")
         }
     }
@@ -149,6 +150,16 @@ class ChatListPresenter (
     }
 
     override fun timerExpired() {
-        fetchChatList()
+        chatUseCase.fetchChatList(parameters.userIdEntity) {
+            val newExistingChats = it.filter {
+                !existingChats.any { presenting ->
+                    presenting.chatId == it.chatId
+                }
+            }
+            if (newExistingChats.isNotEmpty()) {
+                existingChats.addAll(newExistingChats)
+                view.handleChatListChanged(displayingChats.isNotEmpty())
+            }
+        }
     }
 }

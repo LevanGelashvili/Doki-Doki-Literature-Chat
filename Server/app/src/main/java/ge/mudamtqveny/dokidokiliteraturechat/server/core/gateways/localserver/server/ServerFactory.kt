@@ -8,7 +8,7 @@ import java.util.concurrent.Executors
 class ServerFactory {
 
     fun create(): HttpServer {
-        return HttpServer.create(InetSocketAddress(8080), 0).apply {
+        return HttpServer.create(InetSocketAddress(5000), 0).apply {
             executor = Executors.newCachedThreadPool()
             createContext("/connect", ConnectHandler())
             createContext("/verify", VerifyHandler())
