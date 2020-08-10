@@ -30,7 +30,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://localhost:8080/")
+                .baseUrl("http://10.0.2.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
@@ -89,6 +89,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
     }
 
     override fun getUnseenMessageList(unseenMessage: UnseenMessageEntity, completionHandler: (List<MessagePresentingEntity>) -> Unit) {
+        Log.d("levangelashvili", "gatewayshi: $unseenMessage")
         client.fetchUnseenMessageList(unseenMessage).enqueue(DefaultCallback(completionHandler))
     }
 

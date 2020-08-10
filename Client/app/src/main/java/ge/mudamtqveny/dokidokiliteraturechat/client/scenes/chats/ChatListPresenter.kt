@@ -7,10 +7,11 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListingUse
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesParameters
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.base64ToBitmap
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.TimerObserver
 
 interface ChatListPresenting {
     fun handleOnCreate()
-    fun handleOnRefresh()
     fun handleAfterTextChanged(text: String)
     fun handleChatCellClickedAt(position: Int)
     fun handleChatCellSwipedAt(position: Int)
@@ -27,10 +28,14 @@ class ChatListPresenter (
     private val userListUseCase: UserListingUseCase,
     private val router: ChatListRouting
 
-): ChatListPresenting {
+): ChatListPresenting, TimerObserver {
 
     private val filterMinLength = 3
     private val nullChatId = 0L
+
+    private var timer = ServiceTimer(this, 3000).apply {
+        startService()
+    }
 
     private var existingChats: MutableList<ChatPresentingEntity> = mutableListOf()
         set(value) {
@@ -53,10 +58,6 @@ class ChatListPresenter (
         }
 
     override fun handleOnCreate() {
-        fetchChatList()
-    }
-
-    override fun handleOnRefresh() {
         fetchChatList()
     }
 
@@ -142,5 +143,9 @@ class ChatListPresenter (
 
     override fun goBackToIntroduce() {
         router.navigateToIntroduce()
+    }
+
+    override fun timerExpired() {
+        fetchChatList()
     }
 }

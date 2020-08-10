@@ -1,10 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
 import android.util.Log
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.ChatIdEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessageEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.MessagePresentingEntity
-import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
+import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
@@ -86,12 +83,12 @@ class MessagesPresenter(
     }
 
     override fun timerExpired() {
-        /*val lastDate = if (messages.isEmpty()) 0 else messages.last().date
+        val lastDate = if (messages.isEmpty()) 0 else messages.last().date
         val unseenMessageEntity = UnseenMessageEntity(lastDate, parameters.chatId)
 
         unseenMessageListingUseCase.getUnseenMessages(unseenMessageEntity) {
             messages.addAll(it)
             view.messageListUpdated()
-        }*/
+        }
     }
 }
