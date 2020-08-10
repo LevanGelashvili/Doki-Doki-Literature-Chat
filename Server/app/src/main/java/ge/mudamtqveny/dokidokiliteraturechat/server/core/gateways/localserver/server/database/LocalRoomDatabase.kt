@@ -1,13 +1,16 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos.*
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.*
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.*
-import ge.mudamtqveny.dokidokiliteraturechat.server.scenes.server_status.ServerView
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos.ChatDAO
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos.UserDAO
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.ChatDataEntity
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.MessageDataEntity
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.UserDataEntity
+import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.*
+import ge.mudamtqveny.dokidokiliteraturechat.server.scenes.server_status.ServerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

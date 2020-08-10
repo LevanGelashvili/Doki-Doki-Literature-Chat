@@ -3,7 +3,6 @@ package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.s
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.LocalRoomDatabase
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.UnseenMessageEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.exchangeToObject
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.objectToJSON

@@ -1,11 +1,13 @@
 
-package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat
+package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.viewmodels.ChatViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timeBetweenMessage
 
 class ChatsRecyclerViewHolder(chatView: View): RecyclerView.ViewHolder(chatView) {
 
@@ -18,6 +20,6 @@ class ChatsRecyclerViewHolder(chatView: View): RecyclerView.ViewHolder(chatView)
         avatarImageView.setImageBitmap(chatViewModel.friendAvatar)
         nameTextView.text = chatViewModel.friendName
         lastMessageTextView.text = chatViewModel.lastMessage
-        lastMessageDateTextView.text = chatViewModel.lastMessageDate.toString() // FIXME: Format
+        lastMessageDateTextView.text = timeBetweenMessage(chatViewModel.lastMessageDate)
     }
 }

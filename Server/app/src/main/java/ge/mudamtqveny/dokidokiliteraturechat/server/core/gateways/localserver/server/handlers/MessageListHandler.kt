@@ -4,7 +4,6 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.LocalRoomDatabase
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatIdEntity
-import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.ChatInsertEntity
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.exchangeToObject
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.objectToJSON
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.utils.sendResponse

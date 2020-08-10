@@ -1,15 +1,14 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
-import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
-import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
-import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.TimerObserver
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.MessageSendingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UnseenMessageListingUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.ChatListParameters
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.ToolbarUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.viewmodels.MessageViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.viewmodels.ToolbarUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.TimerObserver
 
 interface MessagesPresenting {
     fun goBackToChats()

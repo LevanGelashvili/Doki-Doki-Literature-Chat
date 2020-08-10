@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
-import ge.mudamtqveny.dokidokiliteraturechat.client.utils.dateToString
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.viewmodels.MessageViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.formatDate
 
 class MessageViewHolderFactory {
 
@@ -31,7 +31,7 @@ abstract class MessageViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
     fun configure(viewModel: MessageViewModel) {
         messageBubble.text = viewModel.text
-        messageDate.text = dateToString(viewModel.date)
+        messageDate.text = formatDate(viewModel.date, "HH:mm")
     }
 }
 

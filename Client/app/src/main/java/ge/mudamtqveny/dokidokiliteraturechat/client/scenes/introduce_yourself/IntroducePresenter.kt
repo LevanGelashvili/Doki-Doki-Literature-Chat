@@ -2,7 +2,7 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself
 
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserIdEntity
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.IntroducingUseCase
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.components.introduce.IntroduceUserViewModel
 
 interface IntroducePresenting {
     fun verifyUser(introduceUserViewModel: IntroduceUserViewModel)

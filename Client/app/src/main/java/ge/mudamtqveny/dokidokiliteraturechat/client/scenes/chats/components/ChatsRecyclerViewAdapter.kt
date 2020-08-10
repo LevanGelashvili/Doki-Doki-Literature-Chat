@@ -1,5 +1,5 @@
 
-package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat
+package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

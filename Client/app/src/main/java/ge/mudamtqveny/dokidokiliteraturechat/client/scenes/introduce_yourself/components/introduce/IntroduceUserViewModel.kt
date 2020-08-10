@@ -1,4 +1,4 @@
-package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels
+package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.components.introduce
 
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.UserLoginEntity
 

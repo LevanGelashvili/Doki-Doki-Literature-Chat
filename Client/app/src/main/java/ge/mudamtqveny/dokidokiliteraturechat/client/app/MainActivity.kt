@@ -1,7 +1,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 
 class MainActivity : AppCompatActivity() {

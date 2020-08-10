@@ -4,7 +4,7 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.RestfulChatUseCase
 import ge.mudamtqveny.dokidokiliteraturechat.client.core.usecases.UserListingUseCase
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.viewmodels.ChatViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesParameters
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.base64ToBitmap
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.timer.ServiceTimer
@@ -40,13 +40,13 @@ class ChatListPresenter (
     private var existingChats: MutableList<ChatPresentingEntity> = mutableListOf()
         set(value) {
             field = value
-            view.handleChatListChanged()
+            view.handleChatListChanged(true)
         }
 
     private var filteredUsers: MutableList<UserEntity> = mutableListOf()
         set(value) {
             field = value
-            view.handleChatListChanged()
+            view.handleChatListChanged(true)
         }
 
     private val displayingChats: List<ChatPresentingEntity>
@@ -62,7 +62,9 @@ class ChatListPresenter (
     }
 
     private fun fetchChatList() {
-        chatUseCase.fetchChatList(parameters.userIdEntity) { existingChats = it.toMutableList() }
+        chatUseCase.fetchChatList(parameters.userIdEntity) {
+            existingChats = it.toMutableList()
+        }
     }
 
     override fun handleAfterTextChanged(text: String) {
@@ -71,7 +73,9 @@ class ChatListPresenter (
     }
 
     private fun fetchUserList(word: String) {
-        userListUseCase.fetchUsersSatisfying(UserSearchEntity(parameters.userIdEntity.id, word)) { filteredUsers = it.toMutableList() }
+        userListUseCase.fetchUsersSatisfying(UserSearchEntity(parameters.userIdEntity.id, word)) {
+            filteredUsers = it.toMutableList()
+        }
     }
 
     override fun handleChatCellClickedAt(position: Int) {
@@ -87,8 +91,6 @@ class ChatListPresenter (
 
             chatUseCase.createChat(chatInsertEntity) { chadId ->
                 chat.chatId = chadId.id
-             // filteredUsers.apply { removeAt(indexOfFirst { it.id == chat.friendUserEntity.id }) }
-             // existingChats.add(chat)
                 navigateToMessages(chat)
             }
         }
@@ -102,8 +104,8 @@ class ChatListPresenter (
             chat.friendUserEntity.id,
             chat.friendUserEntity
         )
+        timer.stopService()
         router.navigateToMessages(parameters)
-     // view.handleChatListChanged()
     }
 
     override fun handleChatCellSwipedAt(position: Int) {
@@ -117,10 +119,10 @@ class ChatListPresenter (
             if (view.searchText.length > filterMinLength && chat.friendUserEntity.name.contains(view.searchText))
                 filteredUsers.add(chat.friendUserEntity)
 
-            view.handleChatListChanged()
+            view.handleChatListChanged(true)
         }
         else {
-            view.handleChatListChanged()
+            view.handleChatListChanged(true)
             view.showMessage("You can't delete chat which does not exist")
         }
     }
@@ -133,7 +135,7 @@ class ChatListPresenter (
 
         val chat = displayingChats[position]
 
-        return ChatViewModel (
+        return ChatViewModel(
             base64ToBitmap(chat.friendUserEntity.picture),
             chat.friendUserEntity.name,
             chat.lastMessage,
@@ -142,6 +144,7 @@ class ChatListPresenter (
     }
 
     override fun goBackToIntroduce() {
+        timer.stopService()
         router.navigateToIntroduce()
     }
 

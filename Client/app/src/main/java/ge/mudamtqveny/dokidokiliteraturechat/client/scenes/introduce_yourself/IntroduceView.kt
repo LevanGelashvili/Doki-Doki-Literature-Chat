@@ -12,13 +12,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.viewmodels.IntroduceUserViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.components.introduce.IntroduceUserViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.bitmapToBase64
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.cropBitmapToSquare
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.showToast
 
 
 interface IntroduceViewing {
@@ -33,7 +34,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
     private lateinit var nicknameTextField: EditText
     private lateinit var jobTextField: EditText
     private lateinit var startButton: Button
-    private lateinit var image: ImageView
+    private lateinit var choosingImageView: ImageView
 
     private var bitmap: Bitmap? = null
 
@@ -60,8 +61,8 @@ class IntroduceView : Fragment(), IntroduceViewing {
         startButton = view.findViewById(R.id.start_button)
         startButton.setOnClickListener { attemptLogin() }
 
-        image = view.findViewById(R.id.choose_image)
-        image.setOnClickListener { chooseImage() }
+        choosingImageView = view.findViewById(R.id.choose_image)
+        choosingImageView.setOnClickListener { chooseImage() }
 
         return view
     }
@@ -70,10 +71,14 @@ class IntroduceView : Fragment(), IntroduceViewing {
         val nickname = nicknameTextField.text.toString()
         val job = jobTextField.text.toString()
 
-        if (nickname.isEmpty() || job.isEmpty()) {
-            Toast.makeText(this.context, "Fill both parameters and try again", Toast.LENGTH_LONG).show()
-        } else {
-            if (bitmap == null) bitmap = image.drawToBitmap()
+        if (nickname.length <= 3) {
+            showToast(requireContext(), "Enter name of minimum 3 characters")
+        }
+        else if (nickname.isEmpty() || job.isEmpty()) {
+            showToast(requireContext(), "Please, fill in both parameters")
+        }
+        else {
+            if (bitmap == null) bitmap = choosingImageView.drawToBitmap()
             val viewModel = IntroduceUserViewModel(nickname, job, bitmapToBase64(bitmap!!))
             presenter.verifyUser(viewModel)
         }
@@ -100,7 +105,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
                     chooseImage()
                 }
                 else {
-                    Toast.makeText(this.context, "Permission denied", Toast.LENGTH_LONG).show()
+                    showToast(requireContext(), "Permission denied")
                 }
             }
         }
@@ -111,7 +116,11 @@ class IntroduceView : Fragment(), IntroduceViewing {
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, data?.data);
-            Toast.makeText(this.context, "Image chosen successfully!", Toast.LENGTH_LONG).show()
+            choosingImageView.setImageBitmap(cropBitmapToSquare(bitmap!!))
+            showToast(requireContext(), "Image chosen successfully!")
+        }
+        else {
+            showToast(requireContext(), "Problem with choosing image, try again")
         }
     }
 }

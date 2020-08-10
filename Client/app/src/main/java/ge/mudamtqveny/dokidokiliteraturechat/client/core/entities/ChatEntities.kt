@@ -2,7 +2,7 @@
 package ge.mudamtqveny.dokidokiliteraturechat.client.core.entities
 
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesParameters
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.viewmodels.MessageViewModel
 
 /** Chat Part */
 
@@ -59,7 +59,10 @@ data class MessagePresentingEntity (
     )
 
     fun toMessageViewModel(): MessageViewModel {
-        return MessageViewModel(text, date)
+        return MessageViewModel(
+            text,
+            date
+        )
     }
 }
 

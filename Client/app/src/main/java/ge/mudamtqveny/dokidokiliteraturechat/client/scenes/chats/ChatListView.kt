@@ -4,24 +4,24 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatsRecyclerViewAdapter
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.ChatsRecyclerViewAdapter
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.showToast
 
 interface ChatListViewing {
-    fun handleChatListChanged()
+    fun handleChatListChanged(shouldDisplayChats: Boolean)
     fun showMessage(message: String)
     val searchText: String
 }
@@ -31,6 +31,7 @@ class ChatListView: Fragment(), ChatListViewing {
     lateinit var presenter: ChatListPresenting
 
     private lateinit var searchEditText: EditText
+    private lateinit var noChatHistoryText: TextView
     private lateinit var chatsRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +51,9 @@ class ChatListView: Fragment(), ChatListViewing {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val view = inflater.inflate(R.layout.chats_fragment, container, false)
+
+        noChatHistoryText = view.findViewById(R.id.chat_history_text)
+        noChatHistoryText.visibility = View.INVISIBLE
 
         searchEditText = view.findViewById(R.id.searchEditTextText)
         searchEditText.addTextChangedListener(object: TextWatcher {
@@ -78,12 +82,20 @@ class ChatListView: Fragment(), ChatListViewing {
         return view
     }
 
-    override fun handleChatListChanged() {
-        chatsRecyclerView.adapter?.notifyDataSetChanged()
+    override fun handleChatListChanged(shouldDisplayChats: Boolean) {
+        if (shouldDisplayChats) {
+            chatsRecyclerView.visibility = View.VISIBLE
+            noChatHistoryText.visibility = View.INVISIBLE
+            chatsRecyclerView.adapter?.notifyDataSetChanged()
+        }
+        else {
+            chatsRecyclerView.visibility = View.INVISIBLE
+            noChatHistoryText.visibility = View.VISIBLE
+        }
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(this.context, message, Toast.LENGTH_LONG).show()
+        showToast(requireContext(), message)
     }
 
     override val searchText: String

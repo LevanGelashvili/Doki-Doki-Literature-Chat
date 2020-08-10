@@ -2,12 +2,13 @@ package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,8 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.MessageAdapter
-import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
-import kotlin.math.max
+import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.viewmodels.MessageViewModel
 
 
 interface MessagesViewing {
@@ -68,7 +68,11 @@ class MessagesView: Fragment(), MessagesViewing {
     }
 
     override fun messageTyped() {
-        val viewModel = MessageViewModel(messageEditText.text.toString(), System.currentTimeMillis())
+        val viewModel =
+            MessageViewModel(
+                messageEditText.text.toString(),
+                System.currentTimeMillis()
+            )
         messageEditText.setText("")
         presenter.sendMessage(viewModel)
     }

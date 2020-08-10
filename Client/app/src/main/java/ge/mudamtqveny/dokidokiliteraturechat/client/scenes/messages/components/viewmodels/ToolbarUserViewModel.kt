@@ -1,4 +1,4 @@
-package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels
+package ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.viewmodels
 
 import android.graphics.Bitmap
 
