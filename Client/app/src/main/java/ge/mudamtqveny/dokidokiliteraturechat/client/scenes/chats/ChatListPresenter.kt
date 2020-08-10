@@ -10,6 +10,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.utils.base64ToBitmap
 
 interface ChatListPresenting {
     fun handleOnCreate()
+    fun handleOnRefresh()
     fun handleAfterTextChanged(text: String)
     fun handleChatCellClickedAt(position: Int)
     fun handleChatCellSwipedAt(position: Int)
@@ -51,6 +52,10 @@ class ChatListPresenter (
         }
 
     override fun handleOnCreate() {
+        fetchChatList()
+    }
+
+    override fun handleOnRefresh() {
         fetchChatList()
     }
 

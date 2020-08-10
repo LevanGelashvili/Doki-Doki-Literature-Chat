@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat.ChatsRecyclerViewAdapter
 
@@ -29,6 +30,7 @@ class ChatListView: Fragment(), ChatListViewing {
     lateinit var presenter: ChatListPresenting
 
     private lateinit var searchEditText: EditText
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var chatsRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,12 @@ class ChatListView: Fragment(), ChatListViewing {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { }
         })
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            presenter.handleOnRefresh()
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         chatsRecyclerView = view.findViewById(R.id.chatsRecyclerView)
         chatsRecyclerView.layoutManager = LinearLayoutManager(context)
