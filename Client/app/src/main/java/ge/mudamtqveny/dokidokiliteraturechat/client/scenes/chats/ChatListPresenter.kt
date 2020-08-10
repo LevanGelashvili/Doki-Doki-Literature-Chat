@@ -27,13 +27,16 @@ class ChatListPresenter (
 
 ): ChatListPresenting {
 
+    private val filterMinLength = 3
+    private val nullChatId = 0L
+
     private var existingChats: MutableList<ChatPresentingEntity> = mutableListOf()
         set(value) {
             field = value
             view.handleChatListChanged()
         }
 
-    private var filteredUsers: List<UserEntity> = emptyList()
+    private var filteredUsers: MutableList<UserEntity> = mutableListOf()
         set(value) {
             field = value
             view.handleChatListChanged()
@@ -41,16 +44,10 @@ class ChatListPresenter (
 
     private val displayingChats: List<ChatPresentingEntity>
         get() {
-
-            val filteredExistingChats =
-                if (view.searchText.length > 3)
-                    existingChats.filter { it.friendUserEntity.name.contains(view.searchText) }
-                else existingChats
-
-            val filteredNonExistingChats =
-                filteredUsers.map { ChatPresentingEntity(-1, "", -1, it) }
-
-            return filteredExistingChats + filteredNonExistingChats
+            if (view.searchText.length > filterMinLength)
+                return existingChats.filter { it.friendUserEntity.name.contains(view.searchText) } +
+                        filteredUsers.map { ChatPresentingEntity(nullChatId, "", 0, it) }
+            return existingChats
         }
 
     override fun handleOnCreate() {
@@ -62,58 +59,63 @@ class ChatListPresenter (
     }
 
     override fun handleAfterTextChanged(text: String) {
-        if (text.length > 3) fetchUserList(text)
-        else if (filteredUsers.isNotEmpty()) filteredUsers = emptyList()
+        if (text.length > filterMinLength) fetchUserList(text)
+        else if (filteredUsers.isNotEmpty()) filteredUsers = mutableListOf()
     }
 
     private fun fetchUserList(word: String) {
-        userListUseCase.fetchUsersSatisfying(UserSearchEntity(word)) { filteredUsers = it }
+        userListUseCase.fetchUsersSatisfying(UserSearchEntity(word)) { filteredUsers = it.toMutableList() }
     }
 
     override fun handleChatCellClickedAt(position: Int) {
 
         val chat = displayingChats[position]
 
-        if (chat.chatId == -1L) {
+        if (chat.chatId == nullChatId) {
 
             val chatInsertEntity = ChatInsertEntity (
                 parameters.userIdEntity.id,
                 chat.friendUserEntity.id
             )
 
-            chatUseCase.createChat(chatInsertEntity) {
-                val parameters = MessagesParameters (
-                    it.id,
-                    parameters.userIdEntity.id,
-                    chat.friendUserEntity.id,
-                    chat.friendUserEntity
-                )
-                router.navigateToMessages(parameters)
+            chatUseCase.createChat(chatInsertEntity) { chadId ->
+                chat.chatId = chadId.id
+             // filteredUsers.apply { removeAt(indexOfFirst { it.id == chat.friendUserEntity.id }) }
+             // existingChats.add(chat)
+                navigateToMessages(chat)
             }
-
-        } else {
-
-            val parameters = MessagesParameters (
-                chat.chatId,
-                parameters.userIdEntity.id,
-                chat.friendUserEntity.id,
-                chat.friendUserEntity
-            )
-            router.navigateToMessages(parameters)
         }
+        else navigateToMessages(chat)
+    }
+
+    private fun navigateToMessages(chat: ChatPresentingEntity) {
+        val parameters = MessagesParameters (
+            chat.chatId,
+            parameters.userIdEntity.id,
+            chat.friendUserEntity.id,
+            chat.friendUserEntity
+        )
+        router.navigateToMessages(parameters)
+     // view.handleChatListChanged()
     }
 
     override fun handleChatCellSwipedAt(position: Int) {
 
         val chat = displayingChats[position]
 
-        if (chat.chatId != -1L) {
+        if (chat.chatId != nullChatId) {
             chatUseCase.deleteChat(ChatDeleteEntity(chat.chatId, parameters.userIdEntity.id))
-            val index = existingChats.indexOfFirst { it.chatId == chat.chatId }
-            existingChats.removeAt(index)
-        }
 
-        view.handleChatListChanged()
+            existingChats.apply { removeAt(indexOfFirst { it.chatId == chat.chatId }) }
+            if (view.searchText.length > filterMinLength && chat.friendUserEntity.name.contains(view.searchText))
+                filteredUsers.add(chat.friendUserEntity)
+
+            view.handleChatListChanged()
+        }
+        else {
+            view.handleChatListChanged()
+            view.showMessage("You can't delete chat which does not exist")
+        }
     }
 
     override fun chatsCount(): Int {
@@ -121,6 +123,7 @@ class ChatListPresenter (
     }
 
     override fun chatViewModelAt(position: Int): ChatViewModel {
+
         val chat = displayingChats[position]
 
         return ChatViewModel (

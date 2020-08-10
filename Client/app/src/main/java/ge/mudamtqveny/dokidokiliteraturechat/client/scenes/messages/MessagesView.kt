@@ -60,11 +60,6 @@ class MessagesView: Fragment(), MessagesViewing {
         initRecycler(view)
         initUserFields(view)
 
-        sendButton = view.findViewById(R.id.send_button)
-        sendButton.setOnClickListener {
-            messageTyped()
-        }
-
         return view
     }
 

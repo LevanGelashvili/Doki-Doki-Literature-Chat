@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
@@ -19,6 +20,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.components.chat
 
 interface ChatListViewing {
     fun handleChatListChanged()
+    fun showMessage(message: String)
     val searchText: String
 }
 
@@ -69,6 +71,10 @@ class ChatListView: Fragment(), ChatListViewing {
 
     override fun handleChatListChanged() {
         chatsRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this.context, message, Toast.LENGTH_LONG).show()
     }
 
     override val searchText: String

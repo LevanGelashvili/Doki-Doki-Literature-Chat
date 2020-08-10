@@ -7,7 +7,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.M
 /** Chat Part */
 
 data class ChatPresentingEntity (
-    val chatId: Long,
+    var chatId: Long,
     val lastMessage: String,
     val lastMessageDate: Long,
     val friendUserEntity: UserEntity
