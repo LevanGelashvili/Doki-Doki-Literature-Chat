@@ -8,6 +8,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.MessagesPara
 
 interface ChatListRouting {
     fun navigateToMessages(parameters: MessagesParameters)
+    fun navigateToIntroduce()
 }
 
 class ChatListRouter(private val view: ChatListView): ChatListRouting {
@@ -17,5 +18,9 @@ class ChatListRouter(private val view: ChatListView): ChatListRouting {
             R.id.actionChatListViewToMessagesView,
             bundleOf("parameters" to parameters)
         )
+    }
+
+    override fun navigateToIntroduce() {
+        view.findNavController().navigate(R.id.actionChatListViewToIntroduceView)
     }
 }

@@ -17,10 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.components.MessageAdapter
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.messages.viewmodels.MessageViewModel
+import kotlin.math.max
 
 
 interface MessagesViewing {
-    fun goBack()
+    fun leaveMessageView()
     fun messageTyped()
     fun displayNewlyTypedMessage()
     fun messageListUpdated()
@@ -31,13 +32,12 @@ class MessagesView: Fragment(), MessagesViewing {
     lateinit var presenter: MessagesPresenting
     private lateinit var messageEditText: EditText
     private lateinit var messageAdapter: MessageAdapter
+    private lateinit var messageRecycler: RecyclerView
 
     private lateinit var backImage: ImageView
     private lateinit var userImage: ImageView
     private lateinit var userName: TextView
     private lateinit var userJob: TextView
-
-    private lateinit var sendButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class MessagesView: Fragment(), MessagesViewing {
 
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                goBack()
+                leaveMessageView()
             }
         })
 
@@ -63,7 +63,7 @@ class MessagesView: Fragment(), MessagesViewing {
         return view
     }
 
-    override fun goBack() {
+    override fun leaveMessageView() {
         presenter.goBackToChats()
     }
 
@@ -82,12 +82,14 @@ class MessagesView: Fragment(), MessagesViewing {
     }
 
     private fun initRecycler(view: View) {
-        val messageRecycler: RecyclerView = view.findViewById(R.id.message_recyclerview)
+
         val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
             setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.transparent_divider)!!)
         }
 
+        messageRecycler = view.findViewById(R.id.message_recyclerview)
         messageRecycler.apply {
+            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = messageAdapter
             addItemDecoration(divider)
@@ -104,7 +106,6 @@ class MessagesView: Fragment(), MessagesViewing {
             if(event.action == MotionEvent.ACTION_UP) {
                 if(event.rawX >= (messageEditText.right - messageEditText.compoundDrawables[rightDrawable].bounds.width() * widthCoefficient)) {
                     messageTyped()
-                    true;
                 }
             }
             false;
@@ -117,7 +118,7 @@ class MessagesView: Fragment(), MessagesViewing {
 
         backImage = view.findViewById(R.id.expanded_back_image)
         backImage.setOnClickListener {
-            goBack()
+            leaveMessageView()
         }
 
         userImage = view.findViewById(R.id.expanded_circle_image)

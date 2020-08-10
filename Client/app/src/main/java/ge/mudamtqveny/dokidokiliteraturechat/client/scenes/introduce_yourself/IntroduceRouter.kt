@@ -8,6 +8,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.chats.ChatListParamet
 
 interface IntroduceRouting {
     fun navigateToChatList(userId: UserIdEntity)
+    fun exitApplication(exitAppFunction: () -> Unit)
 }
 
 class IntroduceRouter(private val view: IntroduceView): IntroduceRouting {
@@ -17,5 +18,9 @@ class IntroduceRouter(private val view: IntroduceView): IntroduceRouting {
             R.id.actionIntroduceViewToChatListView,
             bundleOf("parameters" to ChatListParameters(userId))
         )
+    }
+
+    override fun exitApplication(exitAppFunction: () -> Unit) {
+        exitAppFunction()
     }
 }

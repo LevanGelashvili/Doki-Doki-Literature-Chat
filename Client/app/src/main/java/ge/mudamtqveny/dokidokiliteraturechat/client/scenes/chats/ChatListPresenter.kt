@@ -16,6 +16,7 @@ interface ChatListPresenting {
     fun handleChatCellSwipedAt(position: Int)
     fun chatsCount(): Int
     fun chatViewModelAt(position: Int): ChatViewModel
+    fun goBackToIntroduce()
 }
 
 class ChatListPresenter (
@@ -137,5 +138,9 @@ class ChatListPresenter (
             chat.lastMessage,
             chat.lastMessageDate
         )
+    }
+
+    override fun goBackToIntroduce() {
+        router.navigateToIntroduce()
     }
 }

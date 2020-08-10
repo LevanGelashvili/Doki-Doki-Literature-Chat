@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Chats Scene-->
+
+    <!--Chats Toolbar-->
+    <dimen name="chat_expanded_toolbar_size">200dp</dimen>
+
+
     <!--Messages Scene-->
     <dimen name="divider_size">28dp</dimen>
 

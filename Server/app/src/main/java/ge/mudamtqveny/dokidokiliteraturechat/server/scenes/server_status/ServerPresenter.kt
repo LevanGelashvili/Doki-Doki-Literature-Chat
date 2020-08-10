@@ -5,6 +5,7 @@ import ge.mudamtqveny.dokidokiliteraturechat.server.core.usecases.ServerToggling
 interface ServerPresenting {
     fun handleViewDidLoad()
     fun handleServerTogglerButtonClicked()
+    fun serverIsRunning(): Boolean
 }
 
 class ServerPresenter (
@@ -14,6 +15,8 @@ class ServerPresenter (
 
 ): ServerPresenting {
 
+    private var isServerRunning = false
+
     override fun handleViewDidLoad() {
         view.setDescription("Server Down")
         view.setServerTogglerButtonText("Start Server")
@@ -21,7 +24,7 @@ class ServerPresenter (
 
     override fun handleServerTogglerButtonClicked() {
 
-        val isServerRunning = useCase.toggleServer()
+        isServerRunning = useCase.toggleServer()
 
         val description: String
         val buttonText: String
@@ -36,5 +39,9 @@ class ServerPresenter (
 
         view.setDescription(description)
         view.setServerTogglerButtonText(buttonText)
+    }
+
+    override fun serverIsRunning(): Boolean {
+        return isServerRunning
     }
 }
