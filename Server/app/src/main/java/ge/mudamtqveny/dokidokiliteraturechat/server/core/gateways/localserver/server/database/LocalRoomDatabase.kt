@@ -1,7 +1,6 @@
 
 package ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database
 
-import android.util.Log
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.daos.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.database.entities.*
 import ge.mudamtqveny.dokidokiliteraturechat.server.core.gateways.localserver.server.entities.*
@@ -66,12 +65,7 @@ class LocalRoomDatabase: DatabaseService {
 
     override fun deleteChat(chatDeleteEntity: ChatDeleteEntity) {
         GlobalScope.launch(Dispatchers.IO) {
-            val dao = database.getChatDAO()
-            dao.deleteChat(chatDeleteEntity.chatId, chatDeleteEntity.deleterUserId)
-
-            if (dao.numberOfChatEntriesLeft(chatDeleteEntity.chatId) == 0) {
-                dao.deleteChatlessMessages(chatDeleteEntity.chatId)
-            }
+            database.getChatDAO().deleteChat(chatDeleteEntity.chatId)
         }
     }
 
@@ -80,22 +74,50 @@ class LocalRoomDatabase: DatabaseService {
         GlobalScope.launch(Dispatchers.IO) {
 
             val dao = database.getChatDAO()
-            val newChatId = 1 + dao.getMaxChatId()
-            val initChatData = ChatDataEntity(chatInsertEntity.initUserId, newChatId)
-            val otherChatData = ChatDataEntity(chatInsertEntity.otherUserId, newChatId)
+            val initUserId = chatInsertEntity.initUserId
+            val otherUserId = chatInsertEntity.otherUserId
 
-            dao.insertChat(initChatData)
-            dao.insertChat(otherChatData)
+            val initChatData = ChatDataEntity(initUserId)
+            val initChatId = dao.insertChat(initChatData)
 
-            insertMessage(placeHolderMessage(newChatId, chatInsertEntity.initUserId, chatInsertEntity.otherUserId))
+            var otherChatId = dao.getToChatId(initChatId, initUserId, otherUserId)
+            if (otherChatId == null) {
+                val otherChatData = ChatDataEntity(otherUserId)
+                otherChatId = dao.insertChat(otherChatData)
+            }
 
-            completionHandler(ChatIdEntity(newChatId))
+            insertPlaceholderMessagesIn(initChatId, otherChatId, placeHolderMessage(0, initUserId, otherUserId))
+
+            completionHandler(ChatIdEntity(initChatId))
         }
+    }
+
+    private suspend fun insertPlaceholderMessagesIn(chat1Id: Long, chat2Id: Long, messageEntity: MessageEntity) {
+
+        val message = MessageDataEntity(messageEntity)
+        val dao = database.getChatDAO()
+
+        message.chatID = chat1Id
+        dao.insertMessage(message)
+
+        message.chatID = chat2Id
+        dao.insertMessage(message)
     }
 
     override fun insertMessage(messageEntity: MessageEntity) {
         GlobalScope.launch(Dispatchers.IO) {
-            database.getChatDAO().insertMessage(MessageDataEntity(messageEntity))
+
+            val message = MessageDataEntity(messageEntity)
+            val dao = database.getChatDAO()
+            dao.insertMessage(message)
+
+            var toChatId = dao.getToChatId(messageEntity.chatId, messageEntity.userIdFrom, messageEntity.userIdTo)
+            if (toChatId == null) {
+                val otherChatData = ChatDataEntity(messageEntity.userIdTo)
+                toChatId = dao.insertChat(otherChatData)
+            }
+            message.chatID = toChatId
+            dao.insertMessage(message)
         }
     }
 
@@ -131,7 +153,7 @@ class LocalRoomDatabase: DatabaseService {
     }
 
     private fun placeHolderMessage(chatId: Long, userIdFrom: Long, userIdTo: Long): MessageEntity {
-        return MessageEntity(chatId, userIdFrom, userIdTo, "Welcome Text", System.currentTimeMillis())
+        return MessageEntity(chatId, userIdFrom, userIdTo, "Hi there!", System.currentTimeMillis())
     }
 }
 

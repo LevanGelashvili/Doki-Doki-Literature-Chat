@@ -104,7 +104,7 @@ class ChatListPresenter (
         val chat = displayingChats[position]
 
         if (chat.chatId != nullChatId) {
-            chatUseCase.deleteChat(ChatDeleteEntity(chat.chatId, parameters.userIdEntity.id))
+            chatUseCase.deleteChat(ChatDeleteEntity(chat.chatId))
 
             existingChats.apply { removeAt(indexOfFirst { it.chatId == chat.chatId }) }
             if (view.searchText.length > filterMinLength && chat.friendUserEntity.name.contains(view.searchText))

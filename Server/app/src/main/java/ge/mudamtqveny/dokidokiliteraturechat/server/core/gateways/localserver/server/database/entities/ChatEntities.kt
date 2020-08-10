@@ -17,22 +17,17 @@ const val CHAT_TABLE = "chats"
 data class ChatDataEntity (
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Long = 0,
-
     @ColumnInfo(name = "chat_id")
-    var chatId: Long,
+    var chatId: Long = 0,
 
     @ColumnInfo(name = "user_id", index = true)
     var userID: Long
 ) {
-
     /**
      *  Constructor for INSERT
      */
-    constructor(passedId: Long, passedChatId: Long): this (
-        userID = passedId,
-        chatId = passedChatId
+    constructor(passedId: Long): this (
+        userID = passedId
     )
 }
 

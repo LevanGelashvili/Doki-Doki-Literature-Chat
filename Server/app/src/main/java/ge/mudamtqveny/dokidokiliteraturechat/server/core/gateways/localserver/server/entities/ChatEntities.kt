@@ -20,14 +20,13 @@ data class ChatInsertEntity (
 )
 
 data class ChatDeleteEntity (
-    val chatId: Long,
-    val deleterUserId: Long
+    val chatId: Long
 )
 
 /** Message Part */
 
 data class MessageEntity (
-    val chatId: Long,
+    val chatId: Long, // initiator chatId
     val userIdFrom: Long,
     val userIdTo: Long,
     val text: String,

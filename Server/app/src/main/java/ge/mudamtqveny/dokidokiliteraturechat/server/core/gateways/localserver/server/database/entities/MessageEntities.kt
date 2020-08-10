@@ -13,7 +13,8 @@ const val MESSAGE_TABLE = "messages"
     tableName = MESSAGE_TABLE,
     foreignKeys = [
         ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_from"]),
-        ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_to"])
+        ForeignKey(entity = UserDataEntity::class, parentColumns = ["user_id"], childColumns = ["user_id_to"]),
+        ForeignKey(entity = ChatDataEntity::class, parentColumns = ["chat_id"], childColumns = ["chat_id"], onDelete = ForeignKey.CASCADE)
     ]
 )
 data class MessageDataEntity (

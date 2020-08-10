@@ -23,8 +23,7 @@ data class ChatInsertEntity (
 )
 
 data class ChatDeleteEntity (
-    val chatId: Long,
-    val deleterUserId: Long
+    val chatId: Long
 )
 
 /** Message Part */
