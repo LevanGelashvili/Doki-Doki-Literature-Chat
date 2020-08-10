@@ -144,7 +144,7 @@ class LocalRoomDatabase: DatabaseService {
     override fun searchUsers(userSearchEntity: UserSearchEntity, completionHandler: (List<UserEntity>) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
             val dao = database.getUserDAO()
-            val userDataEntities = dao.getUsersHavingInName(userSearchEntity.word)
+            val userDataEntities = dao.getNonFriendUsersWithSubstringInName(userSearchEntity.userId, userSearchEntity.word)
             val userEntities = userDataEntities.map {
                 UserEntity(it.id, it.name, it.job, it.picture)
             }

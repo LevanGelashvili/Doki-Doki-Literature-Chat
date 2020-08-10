@@ -28,5 +28,6 @@ data class UserLoginEntity (
 )
 
 data class UserSearchEntity (
+    val userId: Long,
     val word: String
 )

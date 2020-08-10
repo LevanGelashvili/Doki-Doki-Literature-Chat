@@ -69,7 +69,7 @@ class ChatListPresenter (
     }
 
     private fun fetchUserList(word: String) {
-        userListUseCase.fetchUsersSatisfying(UserSearchEntity(word)) { filteredUsers = it.toMutableList() }
+        userListUseCase.fetchUsersSatisfying(UserSearchEntity(parameters.userIdEntity.id, word)) { filteredUsers = it.toMutableList() }
     }
 
     override fun handleChatCellClickedAt(position: Int) {
