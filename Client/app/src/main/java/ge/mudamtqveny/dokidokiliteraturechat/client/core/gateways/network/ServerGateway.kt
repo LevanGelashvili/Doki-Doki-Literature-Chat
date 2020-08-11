@@ -29,7 +29,7 @@ class ServerGateway: ConnectionGateway, LoginUserGateway, ChatGateway, MessageGa
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://localhost:5000/")
+                .baseUrl("http://10.0.2.2:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
