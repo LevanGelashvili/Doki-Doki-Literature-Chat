@@ -11,14 +11,11 @@ class DefaultCallback<T> (
 
 ): Callback<T> {
 
-    override fun onFailure(call: Call<T>, t: Throwable) {
-        // TODO: Error Handling
-    }
+    override fun onFailure(call: Call<T>, t: Throwable) {}
 
     override fun onResponse(call: Call<T>, response: Response<T>) {
         if (response.isSuccessful) {
             completionHandler(response.body()!!)
         }
-        // TODO: else { Error Handling }
     }
 }

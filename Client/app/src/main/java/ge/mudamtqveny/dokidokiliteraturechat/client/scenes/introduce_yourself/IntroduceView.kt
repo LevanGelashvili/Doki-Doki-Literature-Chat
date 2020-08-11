@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment
 import ge.mudamtqveny.dokidokiliteraturechat.client.R
 import ge.mudamtqveny.dokidokiliteraturechat.client.scenes.introduce_yourself.components.introduce.IntroduceUserViewModel
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.bitmapToBase64
-import ge.mudamtqveny.dokidokiliteraturechat.client.utils.cropBitmapToSquare
+import ge.mudamtqveny.dokidokiliteraturechat.client.utils.bitmapToSquare
 import ge.mudamtqveny.dokidokiliteraturechat.client.utils.showToast
 
 
@@ -116,7 +116,7 @@ class IntroduceView : Fragment(), IntroduceViewing {
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, data?.data);
-            choosingImageView.setImageBitmap(cropBitmapToSquare(bitmap!!))
+            choosingImageView.setImageBitmap(bitmapToSquare(bitmap!!))
             showToast(requireContext(), "Image chosen successfully!")
         }
         else {

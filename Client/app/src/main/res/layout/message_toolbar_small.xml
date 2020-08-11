@@ -5,27 +5,28 @@
     android:id="@+id/expanded_toolbar_constraint"
     android:layout_width="match_parent"
     android:background="@color/toolbar_color"
+    app:layout_scrollFlags="scroll|enterAlways|snap"
     android:layout_height="@dimen/small_toolbar_size">
 
     <TextView
-        android:id="@+id/small_name"
+        android:id="@+id/message_toolbar_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
 
         android:textColor="@android:color/white"
         android:textSize="16dp"
         android:textStyle="bold"
         android:text="Name"
 
-        app:layout_constraintBottom_toTopOf="@id/small_job"
-        app:layout_constraintStart_toStartOf="@id/small_back_image"
+        app:layout_constraintBottom_toTopOf="@id/message_toolbar_job"
+        app:layout_constraintStart_toStartOf="@id/message_toolbar_back_image"
         app:layout_constraintTop_toTopOf="parent">
     </TextView>
 
     <TextView
-        android:id="@+id/small_job"
+        android:id="@+id/message_toolbar_job"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -33,24 +34,24 @@
         android:textColor="@android:color/white"
         android:text="Manager"
 
-        android:layout_marginTop="@dimen/expanded_vertical_padding"
+        android:layout_marginTop="@dimen/large_vertical_padding"
 
-        app:layout_constraintTop_toBottomOf="@id/small_name"
-        app:layout_constraintStart_toStartOf="@id/small_name"
+        app:layout_constraintTop_toBottomOf="@id/message_toolbar_name"
+        app:layout_constraintStart_toStartOf="@id/message_toolbar_name"
         app:layout_constraintBottom_toBottomOf="parent">
     </TextView>
 
 
 
     <ImageView
-        android:id="@+id/small_back_image"
+        android:id="@+id/message_toolbar_back_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/chevron_left"
         android:scaleX="1.4"
         android:scaleY="1.4"
 
-        android:layout_marginLeft="@dimen/expanded_horizontal_padding"
+        android:layout_marginLeft="@dimen/large_horizontal_padding"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -58,18 +59,19 @@
     </ImageView>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/small_circle_image"
-        android:layout_width="@dimen/image_width"
-        android:layout_height="@dimen/image_width"
+        android:id="@+id/message_toolbar_circle_image"
+        android:layout_width="@dimen/small_image_width"
+        android:layout_height="@dimen/small_image_width"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="@dimen/expanded_horizontal_padding"
+        android:layout_marginRight="@dimen/large_horizontal_padding"
 
         android:layout_gravity="top|center_horizontal"
 
         android:src="@drawable/message_circle"
-        app:civ_border_width="@dimen/border_width"
+        app:civ_border_width="@dimen/small_border_width"
         app:civ_border_color="@color/border_color"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

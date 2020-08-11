@@ -50,6 +50,7 @@ class MessagesView: Fragment(), MessagesViewing {
         })
 
         messageAdapter = MessageAdapter(presenter)
+        presenter.handleOnCreate()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -120,18 +121,18 @@ class MessagesView: Fragment(), MessagesViewing {
 
         val viewModel = presenter.getToolbarViewModel()
 
-        backImage = view.findViewById(R.id.expanded_back_image)
+        backImage = view.findViewById(R.id.message_toolbar_back_image)
         backImage.setOnClickListener {
             leaveMessageView()
         }
 
-        userImage = view.findViewById(R.id.expanded_circle_image)
+        userImage = view.findViewById(R.id.message_toolbar_circle_image)
         userImage.setImageBitmap(viewModel.bitmap)
 
-        userName = view.findViewById(R.id.expanded_name)
+        userName = view.findViewById(R.id.message_toolbar_name)
         userName.text = viewModel.name
 
-        userJob = view.findViewById(R.id.expanded_job)
+        userJob = view.findViewById(R.id.message_toolbar_job)
         userJob.text = viewModel.job
     }
 }

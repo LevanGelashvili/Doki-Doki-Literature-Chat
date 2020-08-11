@@ -17,17 +17,18 @@
     <dimen name="message_circle_size">28dp</dimen>
 
     <!--Messages Toolbar -->
-    <dimen name="expanded_horizontal_padding">35dp</dimen>
-    <dimen name="expanded_vertical_padding">15dp</dimen>
-    <dimen name="expanded_toolbar_size">150dp</dimen>
+    <dimen name="large_horizontal_padding">20dp</dimen>
+    <dimen name="large_vertical_padding">15dp</dimen>
+    <dimen name="large_toolbar_size">150dp</dimen>
 
     <dimen name="small_toolbar_size">75dp</dimen>
 
     <dimen name="spacing_small">12dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
 
-    <dimen name="image_width">65dp</dimen>
-    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="large_image_width">65dp</dimen>
+    <dimen name="small_image_width">50dp</dimen>
 
-    <dimen name="border_width">3dp</dimen>
+    <dimen name="large_border_width">3dp</dimen>
+    <dimen name="small_border_width">2dp</dimen>
 </resources>

@@ -32,10 +32,7 @@ class ChatListPresenter (
 
     private val filterMinLength = 3
     private val nullChatId = 0L
-
-    private var timer = ServiceTimer(this, 2000).apply {
-        startService()
-    }
+    private lateinit var timer: ServiceTimer
 
     private var existingChats: MutableList<ChatPresentingEntity> = mutableListOf()
         set(value) {
@@ -58,6 +55,9 @@ class ChatListPresenter (
         }
 
     override fun handleOnCreate() {
+        timer = ServiceTimer(this, 2000).apply {
+            startService()
+        }
         fetchChatList()
     }
 

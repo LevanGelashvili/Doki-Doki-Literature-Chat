@@ -5,9 +5,12 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import android.widget.Toast
 import java.io.ByteArrayOutputStream
+import java.lang.Integer.min
 import java.text.SimpleDateFormat
+import java.util.*
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(date: Long, format: String): String {
@@ -19,16 +22,22 @@ fun timeBetweenMessage(date: Long): String {
 
     val hourDiff = diff / (60 * 60 * 1000)
     val minDiff = diff / (60 * 1000)
+    val secDiff = diff / (1000)
 
     return when {
+        date == 0L -> { "" }
+
         hourDiff >= 24 -> {
             formatDate(date, "dd/mm/yyyy")
         }
         minDiff >= 60 -> {
             "$hourDiff hour${if (hourDiff == 1L) "" else "s"}"
         }
-        else -> {
+        secDiff >= 60 -> {
             "$minDiff min"
+        }
+        else -> {
+            "$secDiff sec"
         }
     }
 }
@@ -44,22 +53,14 @@ fun base64ToBitmap(base64String: String): Bitmap {
 
 fun bitmapToBase64(bitmap: Bitmap): String {
     val outputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 25, outputStream)
     return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
 }
 
-/**
- *  Taken from:
- *  https://stackoverflow.com/questions/26263660/crop-image-to-square-android
- */
-fun cropBitmapToSquare(bitmap: Bitmap): Bitmap {
-    val width = bitmap.width
-    val height = bitmap.height
-    val newWidth = if (height > width) width else height
-    val newHeight = if (height > width) height - (height - width) else height
-    var cropW = (width - height) / 2
-    cropW = if (cropW < 0) 0 else cropW
-    var cropH = (height - width) / 2
-    cropH = if (cropH < 0) 0 else cropH
-    return Bitmap.createBitmap(bitmap, cropW, cropH, newWidth, newHeight)
+/** Taken from : https://android--code.blogspot.com/2020/06/android-kotlin-bitmap-crop-square.html */
+fun bitmapToSquare(bitmap: Bitmap): Bitmap {
+    val side = minOf(bitmap.width, bitmap. height)
+    val xOffset = (bitmap.width - side) /2
+    val yOffset = (bitmap.height - side)/2
+    return Bitmap.createBitmap(bitmap, xOffset, yOffset, side, side)
 }

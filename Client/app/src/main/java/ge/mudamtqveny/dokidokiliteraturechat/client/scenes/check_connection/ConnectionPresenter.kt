@@ -13,7 +13,6 @@ class ConnectionPresenter(private val router: ConnectionRouting, private val con
         connectionUseCase.connect { isSuccessful ->
             if (isSuccessful)
                 connectionEstablished()
-            // TODO: else display error message
         }
     }
 

@@ -14,6 +14,7 @@ interface MessagesPresenting {
     fun goBackToChats()
     fun sendMessage(messageViewModel: MessageViewModel)
     fun getToolbarViewModel(): ToolbarUserViewModel
+    fun handleOnCreate()
 
     fun isUserMessageAt(position: Int): Boolean
     fun viewModelAt(position: Int): MessageViewModel
@@ -33,15 +34,15 @@ class MessagesPresenter(
 
 ) : MessagesPresenting, TimerObserver {
 
-    init {
+    private lateinit var timer: ServiceTimer
+    private var messages: MutableList<MessagePresentingEntity> = mutableListOf()
+
+    override fun handleOnCreate() {
+        timer = ServiceTimer(this, 2000).apply {
+            startService()
+        }
         fetchMessages()
     }
-
-    private var timer = ServiceTimer(this, 2000).apply {
-        startService()
-    }
-
-    private var messages: MutableList<MessagePresentingEntity> = mutableListOf()
 
     override fun fetchMessages() {
         val chatIdEntity = ChatIdEntity(parameters.chatId)
